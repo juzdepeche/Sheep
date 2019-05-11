@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    enum PlayerType
+    public enum PlayerType
     {
         Wolf,
         Dog
