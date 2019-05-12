@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
 {
     public GameObject Sheep;
     public GameObject Wolf;
+    public GameObject Dog;
 
     public static Spawner Instance;
 
@@ -44,7 +45,7 @@ public class Spawner : MonoBehaviour
         return sheeps;
     }
 
-    public GameObject SpawnWolf()
+    public GameObject SpawnWolf(Player player)
     {
         float x = UnityEngine.Random.Range(-8f, 8f);
         float y = UnityEngine.Random.Range(-4.5f, 4.5f);
@@ -52,7 +53,15 @@ public class Spawner : MonoBehaviour
         Vector2 target = new Vector2(x, y);
 
         GameObject wolf = Instantiate(Wolf, target, Quaternion.identity);
-
+        wolf.GetComponent<Wolf>().Player = player;
         return wolf;
+    }
+    public GameObject SpawnDog(Player player)
+    {
+        Vector2 target = new Vector2(0, 0);
+
+        GameObject dog = Instantiate(Dog, target, Quaternion.identity);
+        dog.GetComponent<Dog>().Player = player;
+        return dog;
     }
 }

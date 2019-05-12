@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InControl;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class Wolf : MonoBehaviour
     public Transform Mouth;
     private Rigidbody2D rb;
     private Vector3 movement;
+
+    public Player Player;
 
     private bool hasBody = true;
     private bool isRunning = false;
@@ -34,8 +37,13 @@ public class Wolf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = 0;
+        float y = 0;
+        if (Player != null)
+        {
+            x = Player.Device.LeftStickX;
+            y = Player.Device.LeftStickY;
+        }
 
         movement = new Vector3(x, y, 0f);
 
@@ -43,11 +51,11 @@ public class Wolf : MonoBehaviour
 
         transform.position = transform.position + movement * Time.deltaTime * Speed;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Player.Device.GetControl(InputControlType.Action1).WasPressed)
         {
             Kill();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Player.Device.GetControl(InputControlType.Action4).WasPressed)
         {
             if (hasBody)
             {
@@ -58,7 +66,7 @@ public class Wolf : MonoBehaviour
                 TryGetInNewBody();
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Player.Device.GetControl(InputControlType.Action3).WasPressed)
         {
             AskAhou();
         }

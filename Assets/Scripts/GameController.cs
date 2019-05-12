@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
 
     private GameObject[] Sheeps;
     private GameObject Wolf;
+    private GameObject Dog;
 
     private bool isGameOver = false;
     private bool isNightDropping = false;
@@ -66,8 +67,21 @@ public class GameController : MonoBehaviour
         cameraWidth = cameraHeight * Camera.main.aspect;
 
         SplitLevelInLayers();
+
+        foreach(Player player in PlayerDevicesData.Players)
+        {
+            switch (player.Role)
+            {
+                case PlayerType.Dog:
+                    Dog = Spawner.Instance.SpawnDog(player);
+                    break;
+                case PlayerType.Wolf:
+                    Wolf = Spawner.Instance.SpawnWolf(player);
+                    break;
+            }
+        }
+
         Sheeps = Spawner.Instance.SpawnSheeps(SheepNumber);
-        Wolf = Spawner.Instance.SpawnWolf();
 
         ProgressBar.SpecialValue = 0;
         ProgressBar.HungryValue = 100;

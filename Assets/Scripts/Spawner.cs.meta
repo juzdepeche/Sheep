@@ -6,6 +6,7 @@ MonoImporter:
   defaultReferences:
   - Sheep: {fileID: 7678211240056489356, guid: cdf36ffb667263c4880994dfc75cc9fc, type: 3}
   - Wolf: {fileID: 1039250001021283908, guid: 548a7873aea2fdd42913d12b4f4e2271, type: 3}
+  - Dog: {fileID: 1637144059313282836, guid: 8f08889337a02154ab707fc487b14506, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

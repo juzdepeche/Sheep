@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using InControl;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Dog : MonoBehaviour
 {
     public float Speed;
+    public Player Player;
     private SpriteRenderer sprite;
     public GameObject Mouth;
     // Start is called before the first frame update
@@ -16,8 +18,13 @@ public class Dog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal2");
-        float y = Input.GetAxis("Vertical2");
+        float x = 0;
+        float y = 0;
+        if (Player != null)
+        {
+            x = Player.Device.LeftStickX;
+            y = Player.Device.LeftStickY;
+        }
 
         Vector3 movement = new Vector3(x, y, 0f);
 
@@ -25,11 +32,11 @@ public class Dog : MonoBehaviour
 
         transform.position = transform.position + movement * Time.deltaTime * Speed;
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Player.Device.GetControl(InputControlType.Action1).WasPressed)
         {
             Kill();
         }
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (Player.Device.GetControl(InputControlType.Action3).WasPressed)
         {
             AskWoofWoof();
         }

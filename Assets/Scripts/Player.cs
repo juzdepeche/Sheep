@@ -9,6 +9,7 @@ public class Player
     public InputDevice Device;
     public int PlayerIndex;
     public PlayerType Role;
+    public bool RoleLocked = false;
 
     public Player(InputDevice device, int index, PlayerType role)
     {
