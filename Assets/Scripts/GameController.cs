@@ -42,8 +42,8 @@ public class GameController : MonoBehaviour
     public float SpecialProgressBarSpeed = 0.5f;
 
     private GameObject[] Sheeps;
-    private GameObject Wolf;
-    private GameObject Dog;
+    private List<GameObject> Wolves;
+    private List<GameObject> Dogs;
 
     private bool isGameOver = false;
     private bool isNightDropping = false;
@@ -61,6 +61,9 @@ public class GameController : MonoBehaviour
             Instance = this;
         }
 
+        Wolves = new List<GameObject>();
+        Dogs = new List<GameObject>();
+
         wolfGoal.text = wolfScoreGoal.ToString();
 
         cameraHeight = 2f * Camera.main.orthographicSize;
@@ -73,10 +76,10 @@ public class GameController : MonoBehaviour
             switch (player.Role)
             {
                 case PlayerType.Dog:
-                    Dog = Spawner.Instance.SpawnDog(player);
+                    Dogs.Add(Spawner.Instance.SpawnDog(player));
                     break;
                 case PlayerType.Wolf:
-                    Wolf = Spawner.Instance.SpawnWolf(player);
+                    Wolves.Add(Spawner.Instance.SpawnWolf(player));
                     break;
             }
         }
@@ -218,8 +221,11 @@ public class GameController : MonoBehaviour
         gameoverText.text = text;
         gameoverText.gameObject.SetActive(true);
         restartText.gameObject.SetActive(true);
-
-        Wolf.GetComponent<Wolf>().ExitBody();
+        
+        foreach(var wolf in Wolves)
+        {
+            wolf.GetComponent<Wolf>().ExitBody();
+        }
     }
 
     public bool WolfGetInNewBody(Wolf wolf, Vector2 wolfMouth)
@@ -279,10 +285,13 @@ public class GameController : MonoBehaviour
                 sheep.GetComponent<Sheep>().bloodSplatterManager.HideAll();
             }
         }
-        if (Wolf.GetComponent<Wolf>() != null)
+        foreach(var wolf in Wolves)
         {
-            Wolf.GetComponent<Wolf>().Hide();
-            Wolf.GetComponent<Wolf>().bloodSpatterManager.HideAll();
+            if (wolf.GetComponent<Wolf>() != null)
+            {
+                wolf.GetComponent<Wolf>().Hide();
+                wolf.GetComponent<Wolf>().bloodSpatterManager.HideAll();
+            }
         }
         StartCoroutine(ShowSheeps());
     }
@@ -298,10 +307,13 @@ public class GameController : MonoBehaviour
                 sheep.GetComponent<Sheep>().bloodSplatterManager.ShowAll();
             }
         }
-        if (Wolf.GetComponent<Wolf>() != null)
+        foreach (var wolf in Wolves)
         {
-            Wolf.GetComponent<Wolf>().Show();
-            Wolf.GetComponent<Wolf>().bloodSpatterManager.ShowAll();
+            if (wolf.GetComponent<Wolf>() != null)
+            {
+                wolf.GetComponent<Wolf>().Show();
+                wolf.GetComponent<Wolf>().bloodSpatterManager.ShowAll();
+            }
         }
 
         var tempColor = NightImage.color;

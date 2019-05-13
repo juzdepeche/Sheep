@@ -63,6 +63,7 @@ namespace InControl
 			"InControl.NativeProfile.InjusticeFightStickMacProfile",
 			"InControl.NativeProfile.IonDrumRockerMacProfile",
 			"InControl.NativeProfile.JoytekXbox360ControllerMacProfile",
+			"InControl.NativeProfile.KeyboardProfile",
 			"InControl.NativeProfile.KonamiDancePadMacProfile",
 			"InControl.NativeProfile.LogitechChillStreamControllerMacProfile",
 			"InControl.NativeProfile.LogitechControllerMacProfile",
