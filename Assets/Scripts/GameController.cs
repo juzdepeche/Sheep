@@ -296,6 +296,7 @@ public class GameController : MonoBehaviour
     {
         foreach(GameObject sheep in Sheeps)
         {
+            if (sheep == null) continue;
             if(sheep.GetComponent<Sheep>() != null)
             {
                 sheep.GetComponent<Sheep>().Hide();
@@ -318,6 +319,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(NightTime);
         foreach (GameObject sheep in Sheeps)
         {
+            if (sheep == null) continue;
             if (sheep.GetComponent<Sheep>() != null)
             {
                 sheep.GetComponent<Sheep>().Show();
