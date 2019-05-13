@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Player;
 
 public class Dog : MonoBehaviour
 {
@@ -22,8 +23,16 @@ public class Dog : MonoBehaviour
         float y = 0;
         if (Player != null)
         {
-            x = Player.Device.LeftStickX;
-            y = Player.Device.LeftStickY;
+            if(Player.Device != null)
+            {
+                x = Player.Device.LeftStickX;
+                y = Player.Device.LeftStickY;
+            }
+            else
+            {
+                x = Input.GetAxis(Player.InputAxeX);
+                y = Input.GetAxis(Player.InputAxeY);
+            }
         }
 
         Vector3 movement = new Vector3(x, y, 0f);
@@ -32,16 +41,44 @@ public class Dog : MonoBehaviour
 
         transform.position = transform.position + movement * Time.deltaTime * Speed;
 
-        if (Player.Device.GetControl(InputControlType.Action1).WasPressed)
+        if (KillWasPressed())
         {
             Kill();
         }
-        if (Player.Device.GetControl(InputControlType.Action3).WasPressed)
+        if (AskWoofWoofWasPressed())
         {
             AskWoofWoof();
         }
 
         ChangeLayer();
+    }
+
+    private bool KillWasPressed()
+    {
+        if (Player.ControllerType == EControllerType.Controller)
+        {
+            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(Player.Action1)) return true;
+        }
+
+        return false;
+    }
+
+    private bool AskWoofWoofWasPressed()
+    {
+        if (Player.ControllerType == EControllerType.Controller)
+        {
+            if (Player.Device.GetControl(InputControlType.Action3).WasPressed) return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(Player.Action3)) return true;
+        }
+
+        return false;
     }
 
     private void Kill()

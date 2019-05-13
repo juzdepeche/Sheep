@@ -252,7 +252,7 @@ public class PlayerManager : MonoBehaviour
     {
         foreach (var player in players)
         {
-            //if (player.Device == null) continue;
+            if (player.Device == null) continue;
             if (player.Device.GUID == guid)
             {
                 return player;

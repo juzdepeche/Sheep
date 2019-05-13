@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Player;
 
 public class Wolf : MonoBehaviour
 {
@@ -39,10 +40,19 @@ public class Wolf : MonoBehaviour
     {
         float x = 0;
         float y = 0;
+
         if (Player != null)
         {
-            x = Player.Device.LeftStickX;
-            y = Player.Device.LeftStickY;
+            if (Player.Device != null)
+            {
+                x = Player.Device.LeftStickX;
+                y = Player.Device.LeftStickY;
+            }
+            else
+            {
+                x = Input.GetAxis(Player.InputAxeX);
+                y = Input.GetAxis(Player.InputAxeY);
+            }
         }
 
         movement = new Vector3(x, y, 0f);
@@ -51,11 +61,11 @@ public class Wolf : MonoBehaviour
 
         transform.position = transform.position + movement * Time.deltaTime * Speed;
 
-        if (Player.Device.GetControl(InputControlType.Action1).WasPressed)
+        if (KillWasPressed())
         {
             Kill();
         }
-        if (Player.Device.GetControl(InputControlType.Action4).WasPressed)
+        if (BodyWasPressed())
         {
             if (hasBody)
             {
@@ -66,11 +76,53 @@ public class Wolf : MonoBehaviour
                 TryGetInNewBody();
             }
         }
-        if (Player.Device.GetControl(InputControlType.Action3).WasPressed)
+        if (AskAhouWasPressed())
         {
             AskAhou();
         }
         ChangeLayer();
+    }
+
+    private bool AskAhouWasPressed()
+    {
+            if (Player.ControllerType == EControllerType.Controller)
+        {
+            if (Player.Device.GetControl(InputControlType.Action3).WasPressed) return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(Player.Action3)) return true;
+        }
+
+        return false;
+    }
+
+    private bool BodyWasPressed()
+    {
+        if (Player.ControllerType == EControllerType.Controller)
+        {
+            if (Player.Device.GetControl(InputControlType.Action4).WasPressed) return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(Player.Action4)) return true;
+        }
+
+        return false;
+    }
+
+    private bool KillWasPressed()
+    {
+        if(Player.ControllerType == EControllerType.Controller)
+        {
+            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(Player.Action1)) return true;
+        }
+        
+        return false;
     }
 
     private void ChangeFacingDirection(float x)
