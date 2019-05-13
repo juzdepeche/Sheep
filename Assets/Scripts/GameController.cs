@@ -45,6 +45,9 @@ public class GameController : MonoBehaviour
     private List<GameObject> Wolves;
     private List<GameObject> Dogs;
 
+    private int WolvesNumber;
+    private int DogsNumber;
+
     private bool isGameOver = false;
     private bool isNightDropping = false;
 
@@ -83,6 +86,9 @@ public class GameController : MonoBehaviour
                     break;
             }
         }
+
+        WolvesNumber = Wolves.Count;
+        DogsNumber = Dogs.Count;
 
         Sheeps = Spawner.Instance.SpawnSheeps(SheepNumber);
 
@@ -210,11 +216,22 @@ public class GameController : MonoBehaviour
             }
             else if(hit.collider.tag == "Wolf")
             {
-                GameOver("Doggo won.");
+                KillWolf(hit.collider.gameObject);
+                if (WolvesNumber == 0)
+                {
+                    GameOver("Doggo won.");
+                }
             }
         }
     }
 
+    private void KillWolf(GameObject wolf)
+    {
+        wolf.GetComponent<Wolf>().Die();
+        WolvesNumber--;
+    }
+
+    //to rework for the death of a  wolf
     private void GameOver(string text)
     {
         isGameOver = true;

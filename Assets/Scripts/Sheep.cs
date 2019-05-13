@@ -79,7 +79,7 @@ public class Sheep : MonoBehaviour
         }
         else
         {
-            Blood.transform.localScale = Vector3.Lerp(Blood.transform.localScale, new Vector3(3f, 3f, 3f), speed * Time.deltaTime);
+            Blood.transform.localScale = Vector3.Lerp(Blood.transform.localScale, new Vector3(3f, 3f, 3f), Time.deltaTime);
         }
     }
 

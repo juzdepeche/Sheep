@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Player;
 
-public class Wolf : MonoBehaviour
+public class Wolf : PlayerController
 {
     public float Speed;
     public float SpeedMultiplier = 1.5f;
@@ -13,13 +13,10 @@ public class Wolf : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 movement;
 
-    public Player Player;
-
     private bool hasBody = true;
     private bool isRunning = false;
     private float fleeingTime = 2f;
 
-    private SpriteRenderer sprite;
     public Sprite WolfSprite;
     public Sprite WolfWithoutSheepSprite;
     public Sprite SheepSprite;
@@ -38,63 +35,56 @@ public class Wolf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = 0;
-        float y = 0;
-
-        if (Player != null)
+        if (!dead)
         {
-            if (Player.Device != null)
+            float x = 0;
+            float y = 0;
+
+            if (Player != null)
             {
-                x = Player.Device.LeftStickX;
-                y = Player.Device.LeftStickY;
+                if (Player.Device != null)
+                {
+                    x = Player.Device.LeftStickX;
+                    y = Player.Device.LeftStickY;
+                }
+                else
+                {
+                    x = Input.GetAxis(Player.InputAxeX);
+                    y = Input.GetAxis(Player.InputAxeY);
+                }
             }
-            else
+
+            movement = new Vector3(x, y, 0f);
+
+            ChangeFacingDirection(x);
+
+            transform.position = transform.position + movement * Time.deltaTime * Speed;
+
+            if (KillWasPressed())
             {
-                x = Input.GetAxis(Player.InputAxeX);
-                y = Input.GetAxis(Player.InputAxeY);
+                Kill();
             }
-        }
-
-        movement = new Vector3(x, y, 0f);
-
-        ChangeFacingDirection(x);
-
-        transform.position = transform.position + movement * Time.deltaTime * Speed;
-
-        if (KillWasPressed())
-        {
-            Kill();
-        }
-        if (BodyWasPressed())
-        {
-            if (hasBody)
+            if (BodyWasPressed())
             {
-                ExitBody();
+                if (hasBody)
+                {
+                    ExitBody();
+                }
+                else
+                {
+                    TryGetInNewBody();
+                }
             }
-            else
+            if (SpecialWasPressed())
             {
-                TryGetInNewBody();
+                AskAhou();
             }
-        }
-        if (AskAhouWasPressed())
-        {
-            AskAhou();
-        }
-        ChangeLayer();
-    }
-
-    private bool AskAhouWasPressed()
-    {
-            if (Player.ControllerType == EControllerType.Controller)
-        {
-            if (Player.Device.GetControl(InputControlType.Action3).WasPressed) return true;
         }
         else
         {
-            if (Input.GetKeyDown(Player.Action3)) return true;
+            Bleed();
         }
-
-        return false;
+        ChangeLayer();
     }
 
     private bool BodyWasPressed()
@@ -111,57 +101,14 @@ public class Wolf : MonoBehaviour
         return false;
     }
 
-    private bool KillWasPressed()
-    {
-        if(Player.ControllerType == EControllerType.Controller)
-        {
-            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) return true;
-        }
-        else
-        {
-            if (Input.GetKeyDown(Player.Action1)) return true;
-        }
-        
-        return false;
-    }
-
-    private void ChangeFacingDirection(float x)
-    {
-        if (x == 0) return;
-        if (x > 0)
-        {
-            transform.localScale = new Vector3(-0.09f, 0.09f, 0.09f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(0.09f, 0.09f, 0.09f);
-        }
-    }
-
-    private void ChangeLayer()
-    {
-        for (int i = 0; i < GameController.Instance.LayersLevels.Length; i++)
-        {
-            if (i == GameController.Instance.LayersLevels.Length - 1)
-            {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
-            }
-            else if (GameController.Instance.LayersLevels[i] >= transform.position.y && GameController.Instance.LayersLevels[i + 1] < transform.position.y)
-            {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
-                break;
-            }
-        }
-    }
-
-    private void Kill()
+    public override void Kill()
     {
         if (isRunning || !hasBody) return;
         bool hasKilled = GameController.Instance.KillSheepFromWolf(Mouth.transform.position);
         if (hasKilled)
         {
             //sprite.sprite = WolfSprite;
-            if(hasBody) bloodSpatterManager.Splatter(1);
+            if (hasBody) bloodSpatterManager.Splatter(1);
             Speed *= SpeedMultiplier;
             isRunning = true;
             StartCoroutine(StopRunning());
@@ -196,7 +143,7 @@ public class Wolf : MonoBehaviour
         yield return new WaitForSeconds(fleeingTime);
         isRunning = false;
         Speed /= SpeedMultiplier;
-        if(hasBody) sprite.sprite = SheepSprite;
+        if (hasBody) sprite.sprite = SheepSprite;
     }
 
     private void AskAhou()
@@ -212,5 +159,16 @@ public class Wolf : MonoBehaviour
     public void Show()
     {
         sprite.enabled = true;
+    }
+
+    public override void Die()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+        Destroy(GetComponent<Rigidbody2D>());
+        GetComponent<CapsuleCollider2D>().isTrigger = true;
+        Shadow.SetActive(false);
+        dead = true;
+        ExitBody();
+        Blood.SetActive(true);
     }
 }

@@ -260,12 +260,14 @@ MonoBehaviour:
   speed: 1
   speedMultiplier: 1.5
   SpeedBlood: 1
+  dead: 0
   isFleeing: 0
   Shadow: {fileID: 4403961397116641498}
   Blood: {fileID: 291983010276965766}
   sprite: {fileID: 0}
   ChangeLayerDelay: 1
   Instance: {fileID: 0}
+  bloodSplatterManager: {fileID: 0}
 --- !u!50 &8191899921088682050
 Rigidbody2D:
   serializedVersion: 4
@@ -325,7 +327,7 @@ MonoBehaviour:
   - {fileID: 6549821052898456333}
   - {fileID: 7334376466037118193}
   - {fileID: 98839589740933975}
-  array: 
+  BloodSpattersBool: 
 --- !u!114 &3669617826480289333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BloodSpatters: []
-  array: 
+  BloodSpattersBool: 
 --- !u!1001 &1007799870119394082
 PrefabInstance:
   m_ObjectHideFlags: 0

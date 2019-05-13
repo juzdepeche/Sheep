@@ -139,10 +139,13 @@ MonoBehaviour:
   Speed: 1
   SpeedMultiplier: 1.5
   Mouth: {fileID: 8098151225972337029}
+  Shadow: {fileID: 6484153913345018642}
+  Blood: {fileID: 6984802851642529358}
   WolfSprite: {fileID: 21300000, guid: 1567c7c9e23e83b4fa96fa1b9d1534e0, type: 3}
   WolfWithoutSheepSprite: {fileID: 21300000, guid: 2657ee8c308a08243b58a1f57dc23399,
     type: 3}
   SheepSprite: {fileID: 21300000, guid: 036e0c1f048c67d41ad8f525119320ab, type: 3}
+  bloodSpatterManager: {fileID: 0}
 --- !u!114 &1269310498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6984802851642529358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.9, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1039250001021283911}
@@ -366,7 +369,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blood
       objectReference: {fileID: 0}
-    - target: {fileID: 910653674322544757, guid: 7f72f4700976c2146a96a2ef56e399e7,
+    - target: {fileID: 6949663151200617253, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 551397095656422209, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -376,17 +384,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 551397095656422209, guid: 7f72f4700976c2146a96a2ef56e399e7,
+    - target: {fileID: 910653674322544757, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513219857204092937, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520012298400191740, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -446,7 +449,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6892146659272405586, guid: 7f72f4700976c2146a96a2ef56e399e7,
+    - target: {fileID: 5520012298400191740, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276275360770656303, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -456,7 +464,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6276275360770656303, guid: 7f72f4700976c2146a96a2ef56e399e7,
+    - target: {fileID: 6892146659272405586, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_IsActive
       value: 0
