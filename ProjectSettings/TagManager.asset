@@ -46,6 +46,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Leg
+    uniqueID: 483991089
+    locked: 0
+  - name: Body
+    uniqueID: 2588423483
+    locked: 0
+  - name: Head
+    uniqueID: 821334965
+    locked: 0
   - name: Blood
     uniqueID: 768908777
     locked: 0

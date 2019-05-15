@@ -22,18 +22,27 @@ public class Sheep : MonoBehaviour
 
     public GameObject Shadow;
     public GameObject Blood;
+    
+    public SpriteRenderer[] spritesRenderer;
 
-    public SpriteRenderer sprite;
+    public GameObject[] sprites;
 
     private float currentTime;
     public float ChangeLayerDelay = 1f;
+
+    private Animator animator;
 
     public Sheep Instance;
     public BloodSpatterManager bloodSplatterManager;
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.sortingOrder = 100;
+        spritesRenderer = new SpriteRenderer[sprites.Length];
+
+        for (int i = 0; i < spritesRenderer.Length; i++)
+        {
+            spritesRenderer[i] = sprites[i].GetComponent<SpriteRenderer>();
+            spritesRenderer[i].sortingOrder = 100;
+        }
     }
 
     // Start is called before the first frame update
@@ -47,6 +56,8 @@ public class Sheep : MonoBehaviour
         cameraWidth = cameraHeight * Camera.main.aspect;
 
         gameObject.layer = 10;
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -90,13 +101,19 @@ public class Sheep : MonoBehaviour
             //derniere couche
             if (i == GameController.Instance.LayersLevels.Length - 1)
             {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
+                for (int j = 0; j < spritesRenderer.Length; j++)
+                {
+                    spritesRenderer[j].sortingOrder = i + GameController.Instance.MinLayer;
+                }
                 bloodSplatterManager.SetLayer(i + GameController.Instance.MinLayer);
             }
             //entre 2 couches
             else if (GameController.Instance.LayersLevels[i] >= transform.position.y && GameController.Instance.LayersLevels[i + 1] < transform.position.y)
             {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
+                for (int j = 0; j < spritesRenderer.Length; j++)
+                {
+                    spritesRenderer[j].sortingOrder = i + GameController.Instance.MinLayer;
+                }
                 bloodSplatterManager.SetLayer(i + GameController.Instance.MinLayer);
                 break;
             }
@@ -117,11 +134,11 @@ public class Sheep : MonoBehaviour
 
         if (x > 0)
         {
-            transform.localScale = new Vector3(-0.09f, 0.09f, 0.09f);
+            transform.localScale = new Vector3(-0.18f, 0.18f, 0.18f);
         }
         else
         {
-            transform.localScale = new Vector3(0.09f, 0.09f, 0.09f);
+            transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
         }
 
         return new Vector2(x, y);
@@ -179,6 +196,8 @@ public class Sheep : MonoBehaviour
         Shadow.SetActive(false);
         dead = true;
 
+        animator.SetBool("Dead", true);
+
         Blood.SetActive(true);
     }
 
@@ -189,11 +208,17 @@ public class Sheep : MonoBehaviour
 
     public void Hide()
     {
-        sprite.enabled = false;
+        for (int i = 0; i < spritesRenderer.Length; i++)
+        {
+            spritesRenderer[i].enabled = false;
+        }
     }
 
     public void Show()
     {
-        sprite.enabled = true;
+        for (int i = 0; i < spritesRenderer.Length; i++)
+        {
+            spritesRenderer[i].enabled = true;
+        }
     }
 }

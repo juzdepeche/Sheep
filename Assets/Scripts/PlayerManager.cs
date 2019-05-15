@@ -59,12 +59,13 @@ public class PlayerManager : MonoBehaviour
             }
 
             //square (load game)
-            if (device.GetControl(InputControlType.Action3).IsPressed)
+            if (device.GetControl(InputControlType.Action3).IsPressed || (players.Count >= 2 && AllPlayersAreLocked()))
             {
-                if (MainMenuProgressBar.ProgressBarValue < 100)
-                {
-                    MainMenuProgressBar.ProgressBarValue += ProgressBarSpeed * Time.deltaTime;
-                }
+                LoadProgressBar();
+            }
+            else
+            {
+                UnloadProgressBar();
             }
 
             //joystick (changerole)
@@ -122,6 +123,34 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeRole(Guid.Empty, "Enter");
+        }
+    }
+
+    private bool AllPlayersAreLocked()
+    {
+        foreach (var player in players)
+        {
+            if (!player.RoleLocked)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void LoadProgressBar()
+    {
+        if (MainMenuProgressBar.ProgressBarValue < 100)
+        {
+            MainMenuProgressBar.ProgressBarValue += ProgressBarSpeed * Time.deltaTime;
+        }
+    }
+
+    private void UnloadProgressBar()
+    {
+        if (MainMenuProgressBar.ProgressBarValue > 0)
+        {
+            MainMenuProgressBar.ProgressBarValue -= ProgressBarSpeed * Time.deltaTime;
         }
     }
 
