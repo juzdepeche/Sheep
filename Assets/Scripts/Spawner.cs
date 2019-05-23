@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
     public GameObject Sheep;
     public GameObject Wolf;
     public GameObject Dog;
+    public GameObject[] Boules;
 
     public static Spawner Instance;
 
@@ -36,7 +37,7 @@ public class Spawner : MonoBehaviour
 
             if (side >= 1)
             {
-                newSheep.transform.localScale += new Vector3(0, -1f, 0);
+                newSheep.transform.localScale = new Vector3(-newSheep.transform.localScale.x, newSheep.transform.localScale.y, newSheep.transform.localScale.z);
             }
 
             sheeps[i] = newSheep;
@@ -63,5 +64,17 @@ public class Spawner : MonoBehaviour
         GameObject dog = Instantiate(Dog, target, Quaternion.identity);
         dog.GetComponent<Dog>().Player = player;
         return dog;
+    }
+
+    public void SpawnDeadSheep(Vector2 wolfPosition, bool[] blood)
+    {
+        GameObject newDeadSheep = Instantiate(Sheep, wolfPosition, Quaternion.identity);
+        newDeadSheep.GetComponent<Sheep>().Kill(blood);
+        newDeadSheep.GetComponent<BloodSpatterManager>().AddSplatterToBody(blood);
+    }
+
+    public void SpawnBoule(Vector2 position)
+    {
+        var boule = Instantiate(Boules[UnityEngine.Random.Range(0, Boules.Length - 1)], position, Quaternion.identity);
     }
 }

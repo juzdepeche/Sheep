@@ -104,7 +104,7 @@ public class Wolf : PlayerController
     public override void Kill()
     {
         if (isRunning || !hasBody) return;
-        bool hasKilled = GameController.Instance.KillSheepFromWolf(Mouth.transform.position);
+        bool hasKilled = GameController.Instance.KillFromWolf(Mouth.transform.position);
         if (hasKilled)
         {
             //sprite.sprite = WolfSprite;
@@ -121,6 +121,7 @@ public class Wolf : PlayerController
         hasBody = false;
         sprite.sprite = WolfWithoutSheepSprite;
         Speed *= 2.5f;
+        GameController.Instance.WolfGetOutFromBody(transform.position, bloodSpatterManager.BloodSpattersBool);
         bloodSpatterManager.RemoveAll();
     }
 

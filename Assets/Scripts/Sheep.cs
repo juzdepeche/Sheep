@@ -22,7 +22,7 @@ public class Sheep : MonoBehaviour
 
     public GameObject Shadow;
     public GameObject Blood;
-    
+
     public SpriteRenderer[] spritesRenderer;
 
     public GameObject[] sprites;
@@ -34,6 +34,9 @@ public class Sheep : MonoBehaviour
 
     public Sheep Instance;
     public BloodSpatterManager bloodSplatterManager;
+
+    private bool isFacingLeft = true;
+
     private void Awake()
     {
         spritesRenderer = new SpriteRenderer[sprites.Length];
@@ -43,13 +46,13 @@ public class Sheep : MonoBehaviour
             spritesRenderer[i] = sprites[i].GetComponent<SpriteRenderer>();
             spritesRenderer[i].sortingOrder = 100;
         }
+        bloodSplatterManager = GetComponent<BloodSpatterManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
-        bloodSplatterManager = GetComponent<BloodSpatterManager>();
         currentTarget = GetNewRandomPosition();
 
         cameraHeight = 2f * Camera.main.orthographicSize;
@@ -120,25 +123,33 @@ public class Sheep : MonoBehaviour
         }
     }
 
-    Vector2 GetNewRandomPosition()
+    Vector2 GetNewRandomPosition(Vector2? setPosition = null)
     {
+        float x = 0, y = 0;
         Vector2 target;
         Vector2 futurPosition;
+        if (setPosition == null)
+        {
 
-        float x = UnityEngine.Random.Range(-8f, 8f);
-        float y = UnityEngine.Random.Range(-4.5f, 4.5f);
+            x = UnityEngine.Random.Range(-8f, 8f);
+            y = UnityEngine.Random.Range(-4.5f, 4.5f);
 
-        target = new Vector2(x, y);
-
+            target = new Vector2(x, y);
+        }
+        else
+        {
+            target = (Vector2)setPosition;
+            x = setPosition.Value.x;
+        }
         futurPosition = target + new Vector2(transform.position.x, transform.position.y);
 
         if (x > 0)
         {
-            transform.localScale = new Vector3(-0.18f, 0.18f, 0.18f);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
 
         return new Vector2(x, y);
@@ -186,19 +197,19 @@ public class Sheep : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
     }
 
-    public void Kill()
+    public void Kill(bool[] bloodSplatters = null)
     {
         transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
         Destroy(GetComponent<Rigidbody2D>());
-        //Destroy(GetComponent<CapsuleCollider2D>());
         GetComponent<CapsuleCollider2D>().isTrigger = true;
-        //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         Shadow.SetActive(false);
         dead = true;
 
-        animator.SetBool("Dead", true);
-
         Blood.SetActive(true);
+
+        if (bloodSplatters != null) bloodSplatterManager.AddSplatterToBody(bloodSplatters);
+
+        if (animator != null) animator.SetBool("Dead", true);
     }
 
     public void HitFence()
@@ -220,5 +231,30 @@ public class Sheep : MonoBehaviour
         {
             spritesRenderer[i].enabled = true;
         }
+    }
+
+    internal void GoTo(Vector2 doggoMouth, float goToTime)
+    {
+        isFleeing = true;
+
+        if (isIdle)
+        {
+            StopCoroutine(Idle());
+            isIdle = false;
+        }
+
+        speed *= speedMultiplier;
+
+        currentTarget = GetNewRandomPosition(doggoMouth);
+
+        StartCoroutine(StopGointTo(goToTime));
+    }
+
+    IEnumerator StopGointTo(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isFleeing = false;
+        speed /= speedMultiplier;
+        if (!dead) currentTarget = GetNewRandomPosition();
     }
 }

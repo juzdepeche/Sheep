@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
         if (isNightDropping)
         {
             var tempColor = NightImage.color;
-            tempColor.a = alphaNightImageCurrentTime/toNightTime - 0.02f;
+            tempColor.a = alphaNightImageCurrentTime/toNightTime - 0.01f;
             NightImage.color = tempColor;
 
             alphaNightImageCurrentTime += Time.deltaTime;
@@ -167,7 +167,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool KillSheepFromWolf(Vector2 wolfMouth)
+    public bool KillFromWolf(Vector2 wolfMouth)
     {
         RaycastHit2D hit = Physics2D.Raycast(wolfMouth, Vector2.zero);
         if (hit.collider != null)
@@ -183,7 +183,18 @@ public class GameController : MonoBehaviour
 
                 ProgressBar.HungryValue = 0;
 
-                if (wolfScoreGoal == 0)
+                return true;
+            }
+            else if(hit.collider.tag == "Dog" && ProgressBar.HungryValue >= 100 && wolfScoreGoal == 0)
+            {
+                if (hit.collider.GetComponent<Dog>().dead) return false;
+                hit.collider.GetComponent<Dog>().Die();
+                FleeSheepsFrom(wolfMouth, 1.5f);
+                DogsNumber--;
+
+                ProgressBar.HungryValue = 0;
+
+                if (DogsNumber == 0)
                 {
                     GameOver("Wolf won.");
                 }
@@ -208,11 +219,6 @@ public class GameController : MonoBehaviour
 
                 wolfScoreGoal--;
                 wolfGoal.text = wolfScoreGoal.ToString();
-
-                if (wolfScoreGoal == 0)
-                {
-                    GameOver("Wolf won.");
-                }
             }
             else if(hit.collider.tag == "Wolf")
             {
@@ -257,6 +263,7 @@ public class GameController : MonoBehaviour
                 {
                     Destroy(sheep.gameObject);
                     wolf.GetInNewBody(sheep.bloodSplatterManager.BloodSpattersBool);
+                    AudioManager.Instance.SwitchToMainThemeMusic();
                 }
             }
         }
@@ -264,18 +271,52 @@ public class GameController : MonoBehaviour
         return false;
     }
 
+    public void WolfGetOutFromBody(Vector2 wolfPosition, bool[] blood)
+    {
+        AudioManager.Instance.SwitchToStressMusic();
+        //Spawner.Instance.SpawnBoule(wolfPosition);
+    }
+
     public bool AskWoofWoof(Vector2 doggoMouth)
     {
         if (SpecialAttackTurn == PlayerType.Dog && ProgressBar.SpecialValue > 100)
         {
-            //plus gros range (3 au lieu de 2)
-            FleeSheepsFrom(doggoMouth, 3f, false);
+            FleeSheepsFromDog(doggoMouth, 2f, false);
+            //SheepsGoToFromDog(doggoMouth, 1f);
             SpecialAttackTurn = PlayerType.Wolf;
             ProgressBar.SpecialValue = 0;
             FaceImage.sprite = WolfFace;
             return true;
         }
         return false;
+    }
+
+    private void FleeSheepsFromDog(Vector2 doggoMouth, float time, bool bleed)
+    {
+        foreach (GameObject sheep in Sheeps)
+        {
+            if (sheep.gameObject != null)
+            {
+                if (murderReactRange > Vector2.Distance(doggoMouth, sheep.transform.position))
+                {
+                    sheep.GetComponent<Sheep>().FleeFrom(doggoMouth, UnityEngine.Random.Range(time, time + 1f), bleed);
+                }
+            }
+        }
+    }
+
+    private void SheepsGoToFromDog(Vector2 doggoMouth, float time)
+    {
+        foreach (GameObject sheep in Sheeps)
+        {
+            if (sheep.gameObject != null)
+            {
+                if (murderReactRange > Vector2.Distance(doggoMouth, sheep.transform.position))
+                {
+                    sheep.GetComponent<Sheep>().GoTo(doggoMouth, UnityEngine.Random.Range(time, time + 1f));
+                }
+            }
+        }
     }
 
     public bool AskAhou()

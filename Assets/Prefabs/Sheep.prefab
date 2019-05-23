@@ -264,7 +264,8 @@ MonoBehaviour:
   isFleeing: 0
   Shadow: {fileID: 4403961397116641498}
   Blood: {fileID: 291983010276965766}
-  sprite: {fileID: 0}
+  spritesRenderer: []
+  sprites: []
   ChangeLayerDelay: 1
   Instance: {fileID: 0}
   bloodSplatterManager: {fileID: 0}

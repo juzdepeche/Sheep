@@ -58,16 +58,6 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
-            //square (load game)
-            if (device.GetControl(InputControlType.Action3).IsPressed || (players.Count >= 2 && AllPlayersAreLocked()))
-            {
-                LoadProgressBar();
-            }
-            else
-            {
-                UnloadProgressBar();
-            }
-
             //joystick (changerole)
             if (device.LeftStickX > 0.7 || device.LeftStickX < -0.9)
             {
@@ -87,13 +77,6 @@ public class PlayerManager : MonoBehaviour
             if (device.DPadLeft.WasPressed || device.DPadRight.WasPressed)
             {
                 ChangeRole(device.GUID);
-            }
-
-            //Start game
-            if (MainMenuProgressBar.ProgressBarValue >= 100)
-            {
-                PlayerDevicesData.Players = players;
-                SceneManager.LoadScene("Main");
             }
         }
 
@@ -123,6 +106,23 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeRole(Guid.Empty, "Enter");
+        }
+
+        //load game
+        if (players.Count >= 2 && AllPlayersAreLocked())
+        {
+            LoadProgressBar();
+        }
+        else
+        {
+            UnloadProgressBar();
+        }
+
+        //Start game
+        if (MainMenuProgressBar.ProgressBarValue >= 100)
+        {
+            PlayerDevicesData.Players = players;
+            SceneManager.LoadScene("Main");
         }
     }
 

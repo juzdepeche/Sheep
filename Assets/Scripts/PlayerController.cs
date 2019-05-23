@@ -16,6 +16,14 @@ public abstract class PlayerController : MonoBehaviour
 
     protected SpriteRenderer sprite;
 
+    public enum FacingDirection
+    {
+        Left,
+        Right
+    }
+
+    public FacingDirection Direction = FacingDirection.Left;
+
     public virtual void Die()
     {
         transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
@@ -33,10 +41,12 @@ public abstract class PlayerController : MonoBehaviour
         if (x > 0)
         {
             transform.localScale = new Vector3(-0.09f, 0.09f, 0.09f);
+            Direction = FacingDirection.Right;
         }
         else
         {
             transform.localScale = new Vector3(0.09f, 0.09f, 0.09f);
+            Direction = FacingDirection.Left;
         }
     }
 
