@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7339533898407508439}
   m_Layer: 0
-  m_Name: Bottom
-  m_TagString: Untagged
+  m_Name: Clotures_Bottom
+  m_TagString: Fence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -99,6 +99,7 @@ public class Sheep : MonoBehaviour
 
     private void ChangeLayer()
     {
+        if (GameController.Instance == null) return;
         for (int i = 0; i < GameController.Instance.LayersLevels.Length; i++)
         {
             //derniere couche
@@ -256,5 +257,14 @@ public class Sheep : MonoBehaviour
         isFleeing = false;
         speed /= speedMultiplier;
         if (!dead) currentTarget = GetNewRandomPosition();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Fence")
+        {
+            Idle();
+            HitFence();
+        }
     }
 }

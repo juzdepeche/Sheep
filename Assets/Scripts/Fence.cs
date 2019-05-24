@@ -20,7 +20,6 @@ public class Fence : MonoBehaviour
     {
         if(collision.collider.tag == "Sheep")
         {
-            Debug.Log("hit");
             if(GetComponent<Sheep>() != null)
             {
                 GetComponent<Sheep>().Instance.HitFence();

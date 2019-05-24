@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8071163663702415242}
   m_Layer: 0
-  m_Name: Right
-  m_TagString: Untagged
+  m_Name: Clotures_Side
+  m_TagString: Fence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

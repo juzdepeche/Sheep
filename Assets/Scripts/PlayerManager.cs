@@ -10,9 +10,14 @@ using static Player;
 public class PlayerManager : MonoBehaviour
 {
     public GameObject[] Roles;
+    public GameObject[] Controllers;
 
     public Sprite DogFaceSprite;
     public Sprite WolfFaceSprite;
+
+    public Sprite Keyboard1Sprite;
+    public Sprite Keyboard2Sprite;
+    public Sprite ControllerSprite;
 
     public List<Player> players;
     private List<Guid> deviceGUID;
@@ -250,7 +255,25 @@ public class PlayerManager : MonoBehaviour
         }
 
         Roles[currentPlayerIndex].SetActive(true);
+        
+        if (Controllers[currentPlayerIndex].GetComponent<SpriteRenderer>() != null)
+        {
+            switch (newPlayer.ControllerType)
+            {
+                case EControllerType.Controller:
+                    Controllers[currentPlayerIndex].GetComponent<SpriteRenderer>().sprite = ControllerSprite;
+                    break;
+                case EControllerType.Keyboard1:
+                    Controllers[currentPlayerIndex].GetComponent<SpriteRenderer>().sprite = Keyboard1Sprite;
+                    break;
+                case EControllerType.Keyboard2:
+                    Controllers[currentPlayerIndex].GetComponent<SpriteRenderer>().sprite = Keyboard2Sprite;
+                    break;
+            }
+        }
+        
 
+        Controllers[currentPlayerIndex].SetActive(true);
         players.Add(newPlayer);
         currentPlayerIndex++;
         return false;
