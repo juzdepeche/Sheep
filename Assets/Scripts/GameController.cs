@@ -182,7 +182,7 @@ public class GameController : MonoBehaviour
                 wolfGoal.text = wolfScoreGoal.ToString();
 
                 ProgressBar.HungryValue = 0;
-
+                AudioManager.Instance.Kill();
                 return true;
             }
             else if(hit.collider.tag == "Dog" && ProgressBar.HungryValue >= 100 && wolfScoreGoal == 0)
@@ -198,7 +198,7 @@ public class GameController : MonoBehaviour
                 {
                     GameOver("Wolf won.");
                 }
-
+                AudioManager.Instance.Kill();
                 return true;
             }
         }
@@ -219,6 +219,7 @@ public class GameController : MonoBehaviour
 
                 wolfScoreGoal--;
                 wolfGoal.text = wolfScoreGoal.ToString();
+                AudioManager.Instance.Kill();
             }
             else if(hit.collider.tag == "Wolf")
             {
@@ -235,6 +236,7 @@ public class GameController : MonoBehaviour
     {
         wolf.GetComponent<Wolf>().Die();
         WolvesNumber--;
+        AudioManager.Instance.Kill();
     }
 
     //to rework for the death of a  wolf
@@ -286,6 +288,7 @@ public class GameController : MonoBehaviour
             SpecialAttackTurn = PlayerType.Wolf;
             ProgressBar.SpecialValue = 0;
             FaceImage.sprite = WolfFace;
+            AudioManager.Instance.Bark();
             return true;
         }
         return false;
@@ -328,6 +331,7 @@ public class GameController : MonoBehaviour
             SpecialAttackTurn = PlayerType.Dog;
             FaceImage.sprite = DogFace;
             ProgressBar.SpecialValue = 0;
+            AudioManager.Instance.Howl();
             return true;
         }
         return false;
