@@ -71,19 +71,19 @@ public class AudioManager : MonoBehaviour
 
     public void Bark()
     {
-        int animationNumber = UnityEngine.Random.Range(1, 4);
-        Play("bark" + animationNumber);
+        int animationNumber = UnityEngine.Random.Range(1, 3);
+        Play("Bark" + animationNumber);
     }
 
     public void Howl()
     {
         int animationNumber = UnityEngine.Random.Range(1, 3);
-        Play("howl" + animationNumber);
+        Play("Howl" + animationNumber);
     }
 
     public void Kill()
     {
         int animationNumber = UnityEngine.Random.Range(1, 4);
-        Play("kill" + animationNumber);
+        Play("Bite" + animationNumber);
     }
 }

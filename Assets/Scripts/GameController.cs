@@ -276,6 +276,7 @@ public class GameController : MonoBehaviour
     public void WolfGetOutFromBody(Vector2 wolfPosition, bool[] blood)
     {
         AudioManager.Instance.SwitchToStressMusic();
+        AudioManager.Instance.Howl();
         //Spawner.Instance.SpawnBoule(wolfPosition);
     }
 

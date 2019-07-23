@@ -861,6 +861,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StressMusic: {fileID: 8300000, guid: 647f0c009eb65864eaf658a0f235aec9, type: 3}
   MainThemeMusic: {fileID: 8300000, guid: ca99a7fe7e0efcd49bafed42849312f7, type: 3}
+  Sounds:
+  - name: Bark1
+    Clip: {fileID: 8300000, guid: 30c933c609ac841499a61a234bdf2197, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Bark2
+    Clip: {fileID: 8300000, guid: 77720cea4b3aa9643bf20c4d9ed49a86, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Bite1
+    Clip: {fileID: 8300000, guid: 980ea809b6eda824e9a5739872fca825, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Howl1
+    Clip: {fileID: 8300000, guid: 67925610b7142f641bdfb22d6ed1539b, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Howl2
+    Clip: {fileID: 8300000, guid: 87cf37ee96610b24cbbea896715457c5, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Bite2
+    Clip: {fileID: 8300000, guid: b4b05ee8948826f4ca61f862fc5cfdae, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: Bite3
+    Clip: {fileID: 8300000, guid: 246e0def268ce8445ae020518f38616a, type: 3}
+    Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+  - name: 
+    Clip: {fileID: 0}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
+  - name: 
+    Clip: {fileID: 0}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
+  - name: 
+    Clip: {fileID: 0}
+    Volume: 0
+    Pitch: 0
+    Source: {fileID: 0}
 --- !u!82 &461772407
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1772,7 +1823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayersLevels: []
   LayersNumber: 50
-  wolfScoreGoal: 5
+  wolfScoreGoal: 8
   wolfGoal: {fileID: 1777998017}
   gameoverText: {fileID: 828078389}
   restartText: {fileID: 975572980}
@@ -1786,7 +1837,7 @@ MonoBehaviour:
   NightTime: 3
   toNightTime: 0.4
   HungryProgressBarSpeed: 10
-  SpecialProgressBarSpeed: 5
+  SpecialProgressBarSpeed: 100
 --- !u!1001 &897895623
 PrefabInstance:
   m_ObjectHideFlags: 0

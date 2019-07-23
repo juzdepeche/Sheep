@@ -265,7 +265,8 @@ MonoBehaviour:
   Shadow: {fileID: 4403961397116641498}
   Blood: {fileID: 291983010276965766}
   spritesRenderer: []
-  sprites: []
+  sprites:
+  - {fileID: 7678211240056489356}
   ChangeLayerDelay: 1
   Instance: {fileID: 0}
   bloodSplatterManager: {fileID: 0}
