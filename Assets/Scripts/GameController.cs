@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
     private int WolvesNumber;
     private int DogsNumber;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     private bool isNightDropping = false;
 
     private float currentAlphaNightImage = 0;
@@ -134,6 +134,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void RestartGame()
+    {
+        if (isGameOver)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
     private void SplitLevelInLayers()
     {
         LayersLevels = new float[LayersNumber];
@@ -181,6 +189,11 @@ public class GameController : MonoBehaviour
                 wolfScoreGoal--;
                 wolfGoal.text = wolfScoreGoal.ToString();
 
+                if (wolfScoreGoal <= 0)
+                {
+                    GameOver("Wolf won.");
+                }
+
                 ProgressBar.HungryValue = 0;
                 AudioManager.Instance.Kill();
                 return true;
@@ -194,7 +207,7 @@ public class GameController : MonoBehaviour
 
                 ProgressBar.HungryValue = 0;
 
-                if (DogsNumber == 0)
+                if (DogsNumber <= 0)
                 {
                     GameOver("Wolf won.");
                 }
@@ -325,7 +338,7 @@ public class GameController : MonoBehaviour
 
     public bool AskAhou()
     {
-        if (SpecialAttackTurn == PlayerType.Wolf && ProgressBar.SpecialValue > 100)
+        if (SpecialAttackTurn == PlayerType.Wolf && ProgressBar.SpecialValue >= 100)
         {
             isNightDropping = true;
             HideSheeps();

@@ -1837,7 +1837,7 @@ MonoBehaviour:
   NightTime: 3
   toNightTime: 0.4
   HungryProgressBarSpeed: 10
-  SpecialProgressBarSpeed: 100
+  SpecialProgressBarSpeed: 5
 --- !u!1001 &897895623
 PrefabInstance:
   m_ObjectHideFlags: 0

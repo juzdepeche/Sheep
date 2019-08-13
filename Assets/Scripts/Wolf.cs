@@ -80,8 +80,7 @@ public class Wolf : PlayerController
                 AskAhou();
             }
         }
-        else
-        {
+        else {
             Bleed();
         }
         ChangeLayer();
