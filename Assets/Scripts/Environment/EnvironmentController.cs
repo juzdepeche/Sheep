@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnvironmentController : MonoBehaviour
 {
     public int GrassQuantity = 40;
+    public GameObject ButterflyPrefab;
+
+    public int ButterflyQuantity = 6;
     public GameObject[] GrassPrefabs;
 
     void Start()
@@ -15,6 +18,10 @@ public class EnvironmentController : MonoBehaviour
             grass.transform.SetParent(gameObject.transform);
             float x = Random.Range(-1, 1);
             if(x == 0) grass.transform.localScale = new Vector3(-grass.transform.localScale.x, grass.transform.localScale.y, grass.transform.localScale.z);
+        }
+        for(int i = 0; i < ButterflyQuantity; i++)
+        {
+            Instantiate(ButterflyPrefab, GetRandomPosition(), Quaternion.identity);
         }
     }
 

@@ -45,6 +45,9 @@ TagManager:
   - name: Shadow
     uniqueID: 1816813253
     locked: 0
+  - name: Grass
+    uniqueID: 4191006359
+    locked: 0
   - name: Cloture
     uniqueID: 3109201197
     locked: 0
@@ -62,4 +65,7 @@ TagManager:
     locked: 0
   - name: Blood
     uniqueID: 768908777
+    locked: 0
+  - name: Butterfly
+    uniqueID: 1562986503
     locked: 0
