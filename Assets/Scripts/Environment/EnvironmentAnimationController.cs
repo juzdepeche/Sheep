@@ -13,6 +13,6 @@ public class EnvironmentAnimationController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        anim.SetTrigger("Contact");
+        if(anim) anim.SetTrigger("Contact");
     }
 }

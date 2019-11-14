@@ -7,6 +7,7 @@ TagManager:
   - Sheep
   - Wolf
   - Dog
+  - Fence
   layers:
   - Default
   - TransparentFX
@@ -41,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Shadow
+    uniqueID: 1816813253
+    locked: 0
   - name: Cloture
     uniqueID: 3109201197
     locked: 0
