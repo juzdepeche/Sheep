@@ -10,6 +10,9 @@ public class EnvironmentController : MonoBehaviour
     public int ButterflyQuantity = 6;
     public GameObject[] GrassPrefabs;
 
+    public int FlowerQuantity = 5;
+    public GameObject FlowerPrefab;
+
     void Start()
     {
         for(int i = 0; i < GrassQuantity; i++)
@@ -21,7 +24,13 @@ public class EnvironmentController : MonoBehaviour
         }
         for(int i = 0; i < ButterflyQuantity; i++)
         {
-            Instantiate(ButterflyPrefab, GetRandomPosition(), Quaternion.identity);
+            var butterfly = Instantiate(ButterflyPrefab, GetRandomPosition(), Quaternion.identity);
+            butterfly.transform.SetParent(gameObject.transform);
+        }
+        for (int i = 0; i < FlowerQuantity; i++)
+        {
+            var flower = Instantiate(FlowerPrefab, GetRandomPosition(), Quaternion.identity);
+            flower.transform.SetParent(gameObject.transform);
         }
     }
 
