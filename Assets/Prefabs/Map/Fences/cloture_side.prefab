@@ -157,6 +157,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadow_oval
       objectReference: {fileID: 0}
+    - target: {fileID: 7659682946041416081, guid: 35c6d00a070a2d149b73740f46b9c502,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3217791509016817224, guid: 35c6d00a070a2d149b73740f46b9c502,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -246,6 +251,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shadow_oval (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659682946041416081, guid: 35c6d00a070a2d149b73740f46b9c502,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3217791509016817224, guid: 35c6d00a070a2d149b73740f46b9c502,
         type: 3}
@@ -337,6 +347,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadow_oval (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7659682946041416081, guid: 35c6d00a070a2d149b73740f46b9c502,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3217791509016817224, guid: 35c6d00a070a2d149b73740f46b9c502,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -426,6 +441,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shadow_fence_side
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173302316606139787, guid: d03ffd3830629f94baa2c0cb1e65e136,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7157858618395071889, guid: d03ffd3830629f94baa2c0cb1e65e136,
         type: 3}

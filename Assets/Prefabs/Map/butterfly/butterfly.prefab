@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 4540176569979024855}
   - component: {fileID: 5377981291286367311}
   m_Layer: 0
-  m_Name: right wing color
+  m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,8 +240,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 4625881938044819236}
   m_Bounds:
-    m_Center: {x: 0.19665293, y: 0.02397503, z: 0}
-    m_Extent: {x: 0.53299385, y: 0.25387678, z: 0}
+    m_Center: {x: 0.19665286, y: 0.02397509, z: 0}
+    m_Extent: {x: 0.5329938, y: 0.25387678, z: 0}
 --- !u!1 &6235817336475658897
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 6872752836880649656}
   - component: {fileID: 4188539594595138347}
   m_Layer: 0
-  m_Name: left wing color
+  m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,8 +352,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 5763191731943643623}
   m_Bounds:
-    m_Center: {x: 0.22607933, y: 0.03045857, z: 0}
-    m_Extent: {x: 0.5550912, y: 0.26463538, z: 0}
+    m_Center: {x: 0.22607934, y: 0.030458242, z: 0}
+    m_Extent: {x: 0.5550912, y: 0.26463526, z: 0}
 --- !u!1 &7853181624294904197
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 7864798945533201770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.004999995, y: 0.525, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.31586}
   m_Children: []
   m_Father: {fileID: 620389471650990132}
   m_RootOrder: 0
@@ -494,5 +494,5 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 1336651675644985242}
   m_Bounds:
-    m_Center: {x: 0.3308176, y: -0.0024078786, z: 0}
-    m_Extent: {x: 0.48720396, y: 0.20738211, z: 0}
+    m_Center: {x: 0.33081764, y: -0.0024079978, z: 0}
+    m_Extent: {x: 0.48720405, y: 0.20738211, z: 0}
