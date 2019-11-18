@@ -37,22 +37,9 @@ public class Wolf : PlayerController
     {
         if (!dead)
         {
-            float x = 0;
-            float y = 0;
-
-            if (Player != null)
-            {
-                if (Player.Device != null)
-                {
-                    x = Player.Device.LeftStickX;
-                    y = Player.Device.LeftStickY;
-                }
-                else
-                {
-                    x = Input.GetAxis(Player.InputAxeX);
-                    y = Input.GetAxis(Player.InputAxeY);
-                }
-            }
+            var axis  = GetAxis();
+            float x = axis[0];
+            float y = axis[1];
 
             movement = new Vector3(x, y, 0f);
 

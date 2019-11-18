@@ -17,21 +17,9 @@ public class Dog : PlayerController
     // Update is called once per frame
     void Update()
     {
-        float x = 0;
-        float y = 0;
-        if (Player != null)
-        {
-            if(Player.Device != null)
-            {
-                x = Player.Device.LeftStickX;
-                y = Player.Device.LeftStickY;
-            }
-            else
-            {
-                x = Input.GetAxis(Player.InputAxeX);
-                y = Input.GetAxis(Player.InputAxeY);
-            }
-        }
+        var axis = GetAxis();
+        float x = axis[0];
+        float y = axis[1];
 
         Vector3 movement = new Vector3(x, y, 0f);
 

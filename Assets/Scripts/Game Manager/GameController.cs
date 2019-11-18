@@ -56,14 +56,17 @@ public class GameController : MonoBehaviour
 
     private PlayerType SpecialAttackTurn = PlayerType.Dog;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         Wolves = new List<GameObject>();
         Dogs = new List<GameObject>();
 
@@ -158,6 +161,26 @@ public class GameController : MonoBehaviour
             }
 
             LayersLevels[i] = currentStep;
+        }
+    }
+
+    public void SetLayer(GameObject go)
+    {
+        var spriteRenderer = go.GetComponent<SpriteRenderer>();
+        if (Instance == null) return;
+        for (int i = 0; i < Instance.LayersLevels.Length; i++)
+        {
+            //derniere couche
+            if (i == Instance.LayersLevels.Length - 1)
+            {
+                spriteRenderer.sortingOrder = i + Instance.MinLayer;
+            }
+            //entre 2 couches
+            else if (Instance.LayersLevels[i] >= go.transform.position.y && Instance.LayersLevels[i + 1] < go.transform.position.y)
+            {
+                spriteRenderer.sortingOrder = i + Instance.MinLayer;
+                break;
+            }
         }
     }
 

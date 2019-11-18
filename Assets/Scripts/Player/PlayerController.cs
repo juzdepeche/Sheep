@@ -35,6 +35,26 @@ public abstract class PlayerController : MonoBehaviour
         Blood.SetActive(true);
     }
 
+    public float[] GetAxis()
+    {
+        float[] axis = new float[2];
+        axis[0] = 0;
+        axis[1] = 0;
+
+        if (Player.Device != null)
+        {
+            axis[0] = Player.Device.LeftStickX;
+            axis[1] = Player.Device.LeftStickY;
+        }
+        else
+        {
+            axis[0] = Input.GetAxis(Player.InputAxeX);
+            axis[1] = Input.GetAxis(Player.InputAxeY);
+        }
+
+        return axis;
+    }
+
     protected void ChangeFacingDirection(float x)
     {
         if (x == 0) return;

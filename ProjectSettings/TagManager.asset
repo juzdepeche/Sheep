@@ -48,7 +48,7 @@ TagManager:
   - name: Grass
     uniqueID: 4191006359
     locked: 0
-  - name: Cloture
+  - name: Top_Fences
     uniqueID: 3109201197
     locked: 0
   - name: Default
@@ -68,4 +68,7 @@ TagManager:
     locked: 0
   - name: Butterfly
     uniqueID: 1562986503
+    locked: 0
+  - name: Bottom_Fences
+    uniqueID: 3231052003
     locked: 0

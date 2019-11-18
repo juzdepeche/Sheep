@@ -13,24 +13,32 @@ public class EnvironmentController : MonoBehaviour
     public int FlowerQuantity = 5;
     public GameObject FlowerPrefab;
 
-    void Start()
+    private void Start()
     {
-        for(int i = 0; i < GrassQuantity; i++)
+        CreateWorld();
+    }
+
+    public void CreateWorld()
+    {
+        for (int i = 0; i < GrassQuantity; i++)
         {
             var grass = Instantiate(GrassPrefabs[Random.Range(0, GrassPrefabs.Length - 1)], GetRandomPosition(), Quaternion.identity);
             grass.transform.SetParent(gameObject.transform);
-            float x = Random.Range(-1, 1);
-            if(x == 0) grass.transform.localScale = new Vector3(-grass.transform.localScale.x, grass.transform.localScale.y, grass.transform.localScale.z);
+            GameController.Instance.SetLayer(grass);
+            SetRandomDirection(grass);
         }
-        for(int i = 0; i < ButterflyQuantity; i++)
+        for (int i = 0; i < ButterflyQuantity; i++)
         {
             var butterfly = Instantiate(ButterflyPrefab, GetRandomPosition(), Quaternion.identity);
             butterfly.transform.SetParent(gameObject.transform);
+            SetRandomDirection(butterfly);
         }
         for (int i = 0; i < FlowerQuantity; i++)
         {
             var flower = Instantiate(FlowerPrefab, GetRandomPosition(), Quaternion.identity);
             flower.transform.SetParent(gameObject.transform);
+            GameController.Instance.SetLayer(flower);
+            SetRandomDirection(flower);
         }
     }
 
@@ -40,5 +48,11 @@ public class EnvironmentController : MonoBehaviour
         float y = Random.Range(-4.5f, 4.5f);
 
         return new Vector2(x, y);
+    }
+
+    private void SetRandomDirection(GameObject go)
+    {
+        float x = Random.Range(-1, 1);
+        if (x == 0) go.transform.localScale = new Vector3(-go.transform.localScale.x, go.transform.localScale.y, go.transform.localScale.z);
     }
 }
