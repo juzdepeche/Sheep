@@ -189,6 +189,8 @@ MonoBehaviour:
   sprites:
   - {fileID: 7678211240056489356}
   ChangeLayerDelay: 1
+  ChargeDelay: 2
+  ChargeForce: 100
   Instance: {fileID: 0}
   bloodSplatterManager: {fileID: 0}
 --- !u!50 &8191899921088682050
@@ -203,12 +205,12 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.27402014
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Material: {fileID: 6200000, guid: 2cf3fce3945781540811fa9e96518226, type: 2}
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -225,8 +227,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.30367857, y: -1.3320954}
-  m_Size: {x: 6.640083, y: 6.640083}
+  m_Offset: {x: -0.30928165, y: -0.50020784}
+  m_Size: {x: 7.8660226, y: 4.976345}
   m_Direction: 1
 --- !u!114 &3468704772873570228
 MonoBehaviour:
@@ -276,6 +278,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blood
+      objectReference: {fileID: 0}
+    - target: {fileID: 910653674322544757, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 808715796329047419, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 551397095656422209, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513219857204092937, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520012298400191740, guid: 7f72f4700976c2146a96a2ef56e399e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4944482320700913100, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
@@ -330,31 +357,6 @@ PrefabInstance:
     - target: {fileID: 4944482320700913100, guid: 7f72f4700976c2146a96a2ef56e399e7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 910653674322544757, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 808715796329047419, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 551397095656422209, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4513219857204092937, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520012298400191740, guid: 7f72f4700976c2146a96a2ef56e399e7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6892146659272405586, guid: 7f72f4700976c2146a96a2ef56e399e7,

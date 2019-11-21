@@ -15,6 +15,20 @@ public abstract class PlayerController : MonoBehaviour
     public bool dead;
 
     protected SpriteRenderer sprite;
+    protected Rigidbody2D rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        DoStart();
+    }
+
+    //Since Wolf needed Start(), DoStart is an override method to be use in its children to not override Start() 
+    public virtual void DoStart()
+    {
+        //override
+    }
 
     public enum FacingDirection
     {

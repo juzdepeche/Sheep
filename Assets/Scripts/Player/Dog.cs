@@ -8,14 +8,9 @@ public class Dog : PlayerController
 {
     public float Speed;
     public GameObject Mouth;
-    // Start is called before the first frame update
-    void Start()
-    {
-        sprite = GetComponent<SpriteRenderer>();
-    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         var axis = GetAxis();
         float x = axis[0];
@@ -25,8 +20,14 @@ public class Dog : PlayerController
 
         ChangeFacingDirection(x);
 
-        transform.position = transform.position + movement * Time.deltaTime * Speed;
+        var position = transform.position + movement * Time.deltaTime * Speed;
+        rb.MovePosition(position);
 
+        ChangeLayer();
+    }
+
+    private void Update()
+    {
         if (KillWasPressed())
         {
             Kill();
@@ -35,8 +36,6 @@ public class Dog : PlayerController
         {
             AskWoofWoof();
         }
-
-        ChangeLayer();
     }
 
     public override void Kill()

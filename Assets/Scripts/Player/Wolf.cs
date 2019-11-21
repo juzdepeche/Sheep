@@ -10,7 +10,6 @@ public class Wolf : PlayerController
     public float Speed;
     public float SpeedMultiplier = 1.5f;
     public Transform Mouth;
-    private Rigidbody2D rb;
     private Vector3 movement;
 
     private bool hasBody = true;
@@ -22,18 +21,14 @@ public class Wolf : PlayerController
     public Sprite SheepSprite;
 
     public BloodSpatterManager bloodSpatterManager;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    //See PlayerController
+    public override void DoStart()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
         bloodSpatterManager = GetComponent<BloodSpatterManager>();
-        sprite.sortingOrder = 100;
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         if (!dead)
         {
@@ -45,32 +40,36 @@ public class Wolf : PlayerController
 
             ChangeFacingDirection(x);
 
-            transform.position = transform.position + movement * Time.deltaTime * Speed;
-
-            if (KillWasPressed())
-            {
-                Kill();
-            }
-            if (BodyWasPressed())
-            {
-                if (hasBody)
-                {
-                    ExitBody();
-                }
-                else
-                {
-                    TryGetInNewBody();
-                }
-            }
-            if (SpecialWasPressed())
-            {
-                AskAhou();
-            }
+            var position = transform.position + movement * Time.deltaTime * Speed;
+            rb.MovePosition(position);
         }
         else {
             Bleed();
         }
         ChangeLayer();
+    }
+
+    private void Update()
+    {
+        if (KillWasPressed())
+        {
+            Kill();
+        }
+        if (BodyWasPressed())
+        {
+            if (hasBody)
+            {
+                ExitBody();
+            }
+            else
+            {
+                TryGetInNewBody();
+            }
+        }
+        if (SpecialWasPressed())
+        {
+            AskAhou();
+        }
     }
 
     private bool BodyWasPressed()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Sheep : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Sheep : MonoBehaviour
 
     private Vector2 currentTarget;
 
+    private Rigidbody2D rb;
+
     private float cameraWidth;
     private float cameraHeight;
 
@@ -27,7 +30,7 @@ public class Sheep : MonoBehaviour
 
     public GameObject[] sprites;
 
-    private float currentTime;
+    private float currentTimeLayer;
     public float ChangeLayerDelay = 1f;
 
     private Animator animator;
@@ -55,6 +58,8 @@ public class Sheep : MonoBehaviour
         Instance = this;
         currentTarget = GetNewRandomPosition();
 
+        rb = GetComponent<Rigidbody2D>();
+        rb.mass = UnityEngine.Random.Range(0.2f, 0.5f);
         cameraHeight = 2f * Camera.main.orthographicSize;
         cameraWidth = cameraHeight * Camera.main.aspect;
 
@@ -62,19 +67,14 @@ public class Sheep : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         if (!dead)
         {
             if (!isIdle)
             {
-                if (isFleeing)
-                {
-                    GoToPosition();
-                }
-                else if (Vector2.Distance(currentTarget, transform.position) > 0)
+                if (isFleeing || Vector2.Distance(currentTarget, transform.position) > 0)
                 {
                     GoToPosition();
                 }
@@ -83,13 +83,13 @@ public class Sheep : MonoBehaviour
                     StartCoroutine(Idle());
                 }
             }
-            if (currentTime >= ChangeLayerDelay)
+            if (currentTimeLayer >= ChangeLayerDelay)
             {
                 ChangeLayer();
-                currentTime = 0;
+                currentTimeLayer = 0;
             }
 
-            currentTime += Time.deltaTime;
+            currentTimeLayer += Time.deltaTime;
         }
         else
         {
@@ -195,7 +195,9 @@ public class Sheep : MonoBehaviour
 
     void GoToPosition()
     {
-        transform.position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        var position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        rb.MovePosition(position);
     }
 
     public void Kill(bool[] bloodSplatters = null)

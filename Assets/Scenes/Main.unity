@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LayersLevels: []
-  LayersNumber: 50
+  LayersNumber: 60
   wolfScoreGoal: 8
   wolfGoal: {fileID: 1777998017}
   gameoverText: {fileID: 828078389}
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   DogFace: {fileID: 21300000, guid: 7298d3666f7be374cbbe8821f69904c1, type: 3}
   WolfFace: {fileID: 21300000, guid: e474d009a9539ae4f950b5f4ac67a275, type: 3}
   MinLayer: 8
-  SheepNumber: 70
+  SheepNumber: 60
   murderReactRange: 3
   NightTime: 3
   toNightTime: 0.4
