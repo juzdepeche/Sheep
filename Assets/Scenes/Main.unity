@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LayersLevels: []
-  LayersNumber: 60
+  LayersNumber: 70
   wolfScoreGoal: 8
   wolfGoal: {fileID: 1777998017}
   gameoverText: {fileID: 828078389}

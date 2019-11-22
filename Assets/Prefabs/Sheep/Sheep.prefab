@@ -190,7 +190,7 @@ MonoBehaviour:
   - {fileID: 7678211240056489356}
   ChangeLayerDelay: 1
   ChargeDelay: 2
-  ChargeForce: 100
+  ChargeForce: 2
   Instance: {fileID: 0}
   bloodSplatterManager: {fileID: 0}
 --- !u!50 &8191899921088682050

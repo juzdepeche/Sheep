@@ -77,16 +77,19 @@ public class GameController : MonoBehaviour
 
         SplitLevelInLayers();
 
-        foreach(Player player in PlayerDevicesData.Players)
+        if (PlayerDevicesData.Players != null)
         {
-            switch (player.Role)
+            foreach (Player player in PlayerDevicesData.Players)
             {
-                case PlayerType.Dog:
-                    Dogs.Add(Spawner.Instance.SpawnDog(player));
-                    break;
-                case PlayerType.Wolf:
-                    Wolves.Add(Spawner.Instance.SpawnWolf(player));
-                    break;
+                switch (player.Role)
+                {
+                    case PlayerType.Dog:
+                        Dogs.Add(Spawner.Instance.SpawnDog(player));
+                        break;
+                    case PlayerType.Wolf:
+                        Wolves.Add(Spawner.Instance.SpawnWolf(player));
+                        break;
+                }
             }
         }
 
