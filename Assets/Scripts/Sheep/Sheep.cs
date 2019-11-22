@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 public class Sheep : MonoBehaviour
 {
@@ -32,6 +31,11 @@ public class Sheep : MonoBehaviour
 
     private float currentTimeLayer;
     public float ChangeLayerDelay = 1f;
+    private float currentTimeNotMoving;
+    private Vector2 lastPosition;
+    public float NotMovingDelay;
+
+    private Vector2 lastFacingPosition;
 
     private Animator animator;
 
@@ -90,11 +94,23 @@ public class Sheep : MonoBehaviour
             }
 
             currentTimeLayer += Time.deltaTime;
+            SetFacingDirection();
         }
         else
         {
             Blood.transform.localScale = Vector3.Lerp(Blood.transform.localScale, new Vector3(3f, 3f, 3f), Time.deltaTime);
         }
+    }
+
+    private void SetFacingDirection() {
+        //if(transform.position.x < currentTarget.x)
+        //{
+        //    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        //}
+        //else if(transform.position.x > currentTarget.x)
+        //{
+        //    transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        //}
     }
 
     private void ChangeLayer()
@@ -128,7 +144,6 @@ public class Sheep : MonoBehaviour
     {
         float x = 0, y = 0;
         Vector2 target;
-        Vector2 futurPosition;
         if (setPosition == null)
         {
 
@@ -140,17 +155,6 @@ public class Sheep : MonoBehaviour
         else
         {
             target = (Vector2)setPosition;
-            x = setPosition.Value.x;
-        }
-        futurPosition = target + new Vector2(transform.position.x, transform.position.y);
-
-        if (x > 0)
-        {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-        else
-        {
-            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
 
         return new Vector2(x, y);
@@ -196,6 +200,16 @@ public class Sheep : MonoBehaviour
     void GoToPosition()
     {
         //transform.position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        if (currentTimeNotMoving >= NotMovingDelay)
+        {
+            if (Vector2.Distance(transform.position, lastPosition) <= 0.5f)
+            {
+                currentTarget = GetNewRandomPosition();
+            }
+            currentTimeNotMoving = 0;
+            lastPosition = transform.position;
+        }
+        currentTimeNotMoving += Time.deltaTime;
         var position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
         rb.MovePosition(position);
     }
