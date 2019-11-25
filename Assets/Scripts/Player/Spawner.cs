@@ -41,6 +41,7 @@ public class Spawner : MonoBehaviour
             }
 
             sheeps[i] = newSheep;
+            Flock.Instance.AddAgent(newSheep.GetComponent<FlockAgent>());
         }
 
         return sheeps;

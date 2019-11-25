@@ -302,7 +302,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Sheep
       value: 
-      objectReference: {fileID: 7678211240056489356, guid: cdf36ffb667263c4880994dfc75cc9fc,
+      objectReference: {fileID: 7678211240056489356, guid: fb08b7dc654ee644b859af164bef18ea,
         type: 3}
     - target: {fileID: 7141517808061341843, guid: f53a1c883db5dbc47a821d1b88c84e95,
         type: 3}
@@ -1010,6 +1010,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 299957595}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &874450560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874450559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edbff0846a0e324a948f231560cd195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 0}
+  behavior: {fileID: 11400000, guid: 798a9f34a17b7fe4492786b4cf6228f0, type: 2}
+  startingCount: 231
+  driveFactor: 3.5
+  maxSpeed: 0.6
+  neighborRadius: 1
+  avoidanceRadiusMultiplier: 0.6
 --- !u!114 &874450564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,7 +1052,7 @@ MonoBehaviour:
   DogFace: {fileID: 21300000, guid: 7298d3666f7be374cbbe8821f69904c1, type: 3}
   WolfFace: {fileID: 21300000, guid: e474d009a9539ae4f950b5f4ac67a275, type: 3}
   MinLayer: 8
-  SheepNumber: 1
+  SheepNumber: 45
   murderReactRange: 3
   NightTime: 3
   toNightTime: 0.4

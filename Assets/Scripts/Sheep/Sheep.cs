@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Sheep : MonoBehaviour
 {
+    public bool isFlocking = false;
     public float timeForNewPath = 1f;
     public float speed;
     public float speedMultiplier = 1.5f;
@@ -78,13 +79,16 @@ public class Sheep : MonoBehaviour
         {
             if (!isIdle)
             {
-                if (isFleeing || Vector2.Distance(currentTarget, transform.position) > 0)
+                if (!isFlocking)
                 {
-                    GoToPosition();
-                }
-                else
-                {
-                    StartCoroutine(Idle());
+                    if (isFleeing || Vector2.Distance(currentTarget, transform.position) > 0)
+                    {
+                        GoToPosition();
+                    }
+                    else
+                    {
+                        StartCoroutine(Idle());
+                    }
                 }
             }
             if (currentTimeLayer >= ChangeLayerDelay)
