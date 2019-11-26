@@ -5,13 +5,8 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public static Flock Instance;
-    public FlockAgent agentPrefab;
     List<FlockAgent> agents = new List<FlockAgent>();
     public FlockBehavior behavior;
-
-    [Range(10, 500)]
-    public int startingCount = 250;
-    const float AgentDensity = 0.08f;
 
     [Range(1f, 100f)]
     public float driveFactor = 10f;

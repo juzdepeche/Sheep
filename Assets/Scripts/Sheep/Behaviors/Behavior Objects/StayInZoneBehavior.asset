@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Avoidance
-  m_EditorClassIdentifier: Assembly-CSharp::AvoidanceBehavior
+  m_Script: {fileID: 11500000, guid: 6c9f710d7169f1744a5623247250350e, type: 3}
+  m_Name: StayInZoneBehavior
+  m_EditorClassIdentifier: 
+  center: {x: 0, y: 0}
+  horizontalRadius: 8
+  verticalRadius: 4.5

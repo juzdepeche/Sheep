@@ -127,7 +127,7 @@ public class PlayerManager : MonoBehaviour
         if (MainMenuProgressBar.ProgressBarValue >= 100)
         {
             PlayerDevicesData.Players = players;
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Flocking");
         }
     }
 

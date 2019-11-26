@@ -11,11 +11,14 @@ public class FlockAgent : MonoBehaviour
     public Collider2D AgentCollider { get { return agentCollider; } }
     Rigidbody2D rb;
     public Vector2 direction;
+    private float xBaseTransform;
+
     void Start()
     {
         agentCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         direction = Vector2.zero;
+        xBaseTransform = Mathf.Abs(transform.localScale.x);
     }
 
     public void Initialize(Flock flock)
@@ -28,6 +31,16 @@ public class FlockAgent : MonoBehaviour
         direction = velocity;
         //transform.up = velocity;
         transform.position += (Vector3)velocity * Time.deltaTime;
+
+        if(Mathf.Abs(velocity.x) > 0.3f)
+        if (velocity.x > 0)
+        {
+            transform.localScale = new Vector3(-xBaseTransform, transform.localScale.y, transform.localScale.z);
+        }
+        else if (velocity.x < 0)
+        {
+            transform.localScale = new Vector3(xBaseTransform, transform.localScale.y, transform.localScale.z);
+        }
 
         //var position = (transform.position + (Vector3)velocity) * Time.deltaTime;
         //rb.MovePosition(position);

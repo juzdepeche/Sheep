@@ -33,9 +33,9 @@ public class Sheep : MonoBehaviour
     private float currentTimeLayer;
     public float ChangeLayerDelay = 1f;
     private float currentTimeNotMoving;
-    private Vector2 lastPosition;
+    private Vector2 lastPositionNotChanged;
     public float NotMovingDelay;
-
+    
     private Vector2 lastFacingPosition;
 
     private Animator animator;
@@ -43,7 +43,7 @@ public class Sheep : MonoBehaviour
     public Sheep Instance;
     public BloodSpatterManager bloodSplatterManager;
 
-    private bool isFacingLeft = true;
+    private float xBaseTransform;
 
     private void Awake()
     {
@@ -68,7 +68,8 @@ public class Sheep : MonoBehaviour
         cameraHeight = 2f * Camera.main.orthographicSize;
         cameraWidth = cameraHeight * Camera.main.aspect;
 
-        gameObject.layer = 10;
+        lastFacingPosition = Vector2.zero;
+        xBaseTransform = Math.Abs(transform.localScale.x);
 
         animator = GetComponent<Animator>();
     }
@@ -203,19 +204,30 @@ public class Sheep : MonoBehaviour
 
     void GoToPosition()
     {
-        //transform.position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        currentTimeNotMoving += Time.deltaTime;
+        var position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        rb.MovePosition(position);
+
+        if (position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(-xBaseTransform, transform.localScale.y, transform.localScale.z);
+        }
+        else if (position.x < transform.position.x)
+        {
+            transform.localScale = new Vector3(xBaseTransform, transform.localScale.y, transform.localScale.z);
+        }
+
+        lastFacingPosition = position;
+
         if (currentTimeNotMoving >= NotMovingDelay)
         {
-            if (Vector2.Distance(transform.position, lastPosition) <= 0.5f)
+            if (Vector2.Distance(transform.position, lastPositionNotChanged) <= 0.5f)
             {
                 currentTarget = GetNewRandomPosition();
             }
             currentTimeNotMoving = 0;
-            lastPosition = transform.position;
+            lastPositionNotChanged = transform.position;
         }
-        currentTimeNotMoving += Time.deltaTime;
-        var position = Vector2.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
-        rb.MovePosition(position);
     }
 
     public void Kill(bool[] bloodSplatters = null)
