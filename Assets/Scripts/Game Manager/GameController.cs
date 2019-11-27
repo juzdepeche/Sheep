@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class GameController : Observable
 {
     public enum PlayerType
     {
@@ -100,6 +100,14 @@ public class GameController : MonoBehaviour
 
         ProgressBar.SpecialValue = 0;
         ProgressBar.HungryValue = 100;
+
+        AddObserver(debugSomething, "debug", 123);
+    }
+
+    void debugSomething(object value, string key)
+    {
+        Debug.Log(value);
+        Debug.Log(key);
     }
 
     // Update is called once per frame
@@ -107,10 +115,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (isGameOver)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            RestartGame();
         }
 
         //nuit

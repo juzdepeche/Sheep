@@ -16,6 +16,11 @@ public class Dog : PlayerController
         float x = axis[0];
         float y = axis[1];
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameController.Instance.SetValue("debug", 432);
+        }
+
         Vector3 movement = new Vector3(x, y, 0f);
 
         ChangeFacingDirection(x);
