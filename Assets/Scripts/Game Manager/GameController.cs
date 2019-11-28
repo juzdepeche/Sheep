@@ -100,14 +100,6 @@ public class GameController : Observable
 
         ProgressBar.SpecialValue = 0;
         ProgressBar.HungryValue = 100;
-
-        AddObserver(debugSomething, "debug", 123);
-    }
-
-    void debugSomething(object value, string key)
-    {
-        Debug.Log(value);
-        Debug.Log(key);
     }
 
     // Update is called once per frame

@@ -29,14 +29,14 @@ public abstract class Observable : MonoBehaviour
     }
 
     public Action AddObserver(ObserverCallback callback, string key, object value) {
-		return addObserverTo(callback, key, value);
+		return AddObserverTo(callback, key, value);
 	}
 
-    public void removeObservers(ObserverCallback callback, string key, object value) {
+    public void RemoveObservers(ObserverCallback callback, string key, object value) {
     	RemoveObserversFrom(callback, key, value);
     }
     
-    Action addObserverTo(ObserverCallback callback, string key, object value) {
+    Action AddObserverTo(ObserverCallback callback, string key, object value) {
 		if (callback != null) {
 			observers.Add(new Observer(callback, key, value));
 		}
@@ -47,12 +47,9 @@ public abstract class Observable : MonoBehaviour
     void CallObserversFrom(string key, object value) {
 		for (var i = observers.Count - 1; i >= 0; i--) {
 			var observer = observers[i];
-			//if (observer.Key != null && observer.Key != key) {
-			//	continue;
-			//} else if (observer.HasExpectedValue && observer.Value != value) {
-			//	continue;
-			//}
-			observer.Callback(value, key);
+            if (observer.Key != null && observer.Key != key)
+                continue;
+            observer.Callback(value, key);
 		}
 	}
 
