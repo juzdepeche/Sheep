@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using static Observer;
 
-public abstract class Observable : MonoBehaviour
+public abstract class Observable<T>
 {
-    static readonly Observable instance;
-    readonly List<Observer> observers = new List<Observer>();
-    private Dictionary<string, object> properties = new Dictionary<string, object>();
+    static readonly Observable<T> instance;
+    readonly List<ObserverData<T>> observers = new List<ObserverData<T>>();
+    private Dictionary<string, T> properties = new Dictionary<string, T>();
 
-    public object GetValue(string key) {
+    public T GetValue(string key) {
+        if (!properties.ContainsKey(key)) return default(T);
 		return properties[key];
 	}
 
-    public void SetValue(string key, object value, bool allowEqualValues = false) {
-        //add allowEqualValues condition
+    public void SetValue(string key, T value) {
         if (properties.ContainsKey(key))
         {
             properties[key] = value;
@@ -28,48 +26,39 @@ public abstract class Observable : MonoBehaviour
 		CallObserversFrom(key, value);
     }
 
-    public Action AddObserver(ObserverCallback callback, string key, object value) {
-		return AddObserverTo(callback, key, value);
+    public void AddObserver(ObserverCallback<T> callback, string key) {
+		AddObserverTo(callback, key);
 	}
 
-    public void RemoveObservers(ObserverCallback callback, string key, object value) {
-    	RemoveObserversFrom(callback, key, value);
-    }
-    
-    Action AddObserverTo(ObserverCallback callback, string key, object value) {
-		if (callback != null) {
-			observers.Add(new Observer(callback, key, value));
-		}
-
-        return () => { RemoveObserversFrom(callback, key, value); };
-    }
-
-    void CallObserversFrom(string key, object value) {
-		for (var i = observers.Count - 1; i >= 0; i--) {
-			var observer = observers[i];
-            if (observer.Key != null && observer.Key != key)
-                continue;
-            observer.Callback(value, key);
-		}
+    public void AddObserver(ObserverCallback<T> callback, string key, T value) {
+		AddObserverTo(callback, key);
+        SetValue(key, value);
 	}
 
-    void RemoveObserversFrom(ObserverCallback callback, string key, object value) {
-        for (var i = observers.Count - 1; i >= 0; i--)
+    private void AddObserverTo(ObserverCallback<T> callback, string key) {
+		observers.Add(new ObserverData<T>(callback, key));
+    }
+
+    public void RemoveObservers(ObserverCallback<T> callback, string key) {
+    	RemoveObserversFrom(callback, key);
+    }
+
+    public void RemoveObservers(ObserverCallback<T> callback, string key, T value) {
+    	RemoveObserversFrom(callback, key);
+        SetValue(key, value);
+    }
+
+    private void RemoveObserversFrom(ObserverCallback<T> callback, string key) {
+        foreach (ObserverData<T> observer in observers) 
         {
-            var observer = observers[i];
-            if (callback != observer.Callback)
-            {
-                continue;
-            }
-            else if (key != null && key != observer.Key)
-            {
-                continue;
-            }
-            else if (value != null && value != observer.Value)
-            {
-                continue;
-            }
-            observers.RemoveAt(i);
+            if (callback != observer.Callback && key != observer.Key) observers.Remove(observer);
         }
     }
+
+    private void CallObserversFrom(string key, T value) {
+		foreach (ObserverData<T> observer in observers) 
+        {
+            if (observer.Key == key) observer.Callback(value, key);
+		}
+	}
 }

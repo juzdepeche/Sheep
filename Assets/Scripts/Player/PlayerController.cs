@@ -102,16 +102,19 @@ public abstract class PlayerController : MonoBehaviour
 
     protected bool KillWasPressed()
     {
+        bool wasPressed = false;
         if (Player.ControllerType == EControllerType.Controller)
         {
-            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) return true;
+            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) wasPressed = true;
         }
         else
         {
-            if (Input.GetKeyDown(Player.Action1)) return true;
+            if (Input.GetKeyDown(Player.Action1)) wasPressed = true;
         }
 
-        return false;
+        if (wasPressed) GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
+
+        return wasPressed;
     }
 
     protected bool SpecialWasPressed()

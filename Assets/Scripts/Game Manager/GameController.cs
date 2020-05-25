@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : Observable
+public class GameController : MonoBehaviour
 {
     public enum PlayerType
     {
@@ -92,6 +92,8 @@ public class GameController : Observable
                 }
             }
         }
+
+        GameData.Instance.AddObserver(OnAction1, GameData.ON_ACTION_1, null);
 
         WolvesNumber = Wolves.Count;
         DogsNumber = Dogs.Count;
@@ -420,5 +422,10 @@ public class GameController : Observable
         var tempColor = NightImage.color;
         tempColor.a = 0f;
         NightImage.color = tempColor;
+    }
+
+    private void OnAction1(PlayerController value, string key)
+    {
+        Debug.Log(value);
     }
 }

@@ -20,6 +20,11 @@ public class Dog : PlayerController
 
         ChangeFacingDirection(x);
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
+        }
+
         var position = transform.position + movement * Time.deltaTime * Speed;
         rb.MovePosition(position);
 
