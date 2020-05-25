@@ -906,6 +906,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 581283719}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1149122806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8967889372039708162, guid: b242512ef8b66f74cafb9558b95db173,
+    type: 3}
+  m_PrefabInstance: {fileID: 8967889371598862314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1149122807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149122806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29f74ed33c3c73f4cbfe66284fc17e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LayersLevels: []
+  MinLayer: 8
+  LayersNumber: 70
 --- !u!1 &1164097923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,5 +2842,11 @@ PrefabInstance:
       propertyPath: GrassQuantity
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 8967889372039708163, guid: b242512ef8b66f74cafb9558b95db173,
+        type: 3}
+      propertyPath: FlowerPrefab
+      value: 
+      objectReference: {fileID: 3402571106115860421, guid: 8c7534d44d67182489f56489a5945531,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b242512ef8b66f74cafb9558b95db173, type: 3}

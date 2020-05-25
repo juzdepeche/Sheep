@@ -28,9 +28,6 @@ public class GameController : MonoBehaviour
 
     public int MinLayer = 8;
 
-    private float cameraWidth;
-    private float cameraHeight;
-
     public static GameController Instance;
 
     public int SheepNumber;
@@ -71,11 +68,6 @@ public class GameController : MonoBehaviour
         Dogs = new List<GameObject>();
 
         wolfGoal.text = wolfScoreGoal.ToString();
-
-        cameraHeight = 2f * Camera.main.orthographicSize;
-        cameraWidth = cameraHeight * Camera.main.aspect;
-
-        SplitLevelInLayers();
 
         if (PlayerDevicesData.Players != null)
         {
@@ -144,45 +136,6 @@ public class GameController : MonoBehaviour
         if (isGameOver)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
-
-    private void SplitLevelInLayers()
-    {
-        LayersLevels = new float[LayersNumber];
-
-        float step = (cameraHeight / 2) / (LayersNumber / 2);
-
-        float currentStep = cameraHeight / 2;
-
-        for (var i = 0; i < LayersLevels.Length; i++)
-        {
-            if (i != 0)
-            {
-                currentStep -= step;
-            }
-
-            LayersLevels[i] = currentStep;
-        }
-    }
-
-    public void SetLayer(GameObject go)
-    {
-        var spriteRenderer = go.GetComponent<SpriteRenderer>();
-        if (Instance == null) return;
-        for (int i = 0; i < Instance.LayersLevels.Length; i++)
-        {
-            //derniere couche
-            if (i == Instance.LayersLevels.Length - 1)
-            {
-                spriteRenderer.sortingOrder = i + Instance.MinLayer;
-            }
-            //entre 2 couches
-            else if (Instance.LayersLevels[i] >= go.transform.position.y && Instance.LayersLevels[i + 1] < go.transform.position.y)
-            {
-                spriteRenderer.sortingOrder = i + Instance.MinLayer;
-                break;
-            }
         }
     }
 
