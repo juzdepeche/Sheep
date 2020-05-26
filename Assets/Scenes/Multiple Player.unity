@@ -2848,5 +2848,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3402571106115860421, guid: 8c7534d44d67182489f56489a5945531,
         type: 3}
+    - target: {fileID: 8967889372039708163, guid: b242512ef8b66f74cafb9558b95db173,
+        type: 3}
+      propertyPath: ButterflyPrefab
+      value: 
+      objectReference: {fileID: 4233229294601919895, guid: 22df0ee082daf5e4d90fbb81017c4a9f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b242512ef8b66f74cafb9558b95db173, type: 3}
