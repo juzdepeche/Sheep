@@ -12,8 +12,7 @@ public class GameController : MonoBehaviour
         Wolf,
         Dog
     }
-
-    public float[] LayersLevels;
+    
     public int LayersNumber;
     public int wolfScoreGoal;
     public Text wolfGoal;

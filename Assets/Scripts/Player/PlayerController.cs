@@ -86,18 +86,7 @@ public abstract class PlayerController : MonoBehaviour
 
     protected void ChangeLayer()
     {
-        for (int i = 0; i < GameController.Instance.LayersLevels.Length; i++)
-        {
-            if (i == GameController.Instance.LayersLevels.Length - 1)
-            {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
-            }
-            else if (GameController.Instance.LayersLevels[i] >= transform.position.y && GameController.Instance.LayersLevels[i + 1] < transform.position.y)
-            {
-                sprite.sortingOrder = i + GameController.Instance.MinLayer;
-                break;
-            }
-        }
+        LayerManager.Instance.SetLayer(new SpriteRenderer[] { sprite }, transform.position.y);
     }
 
     protected bool KillWasPressed()
