@@ -24,7 +24,10 @@ public class EnvironmentController : MonoBehaviour
         {
             var grass = Instantiate(GrassPrefabs[Random.Range(0, GrassPrefabs.Length - 1)], GetRandomPosition(), Quaternion.identity);
             grass.transform.SetParent(gameObject.transform);
-            LayerManager.Instance.SetLayer(grass);
+
+            var spriteRenderer = grass.GetComponent<SpriteRenderer>();
+            LayerManager.Instance.SetLayer(new SpriteRenderer[] { spriteRenderer }, grass.transform.position.y);
+            
             SetRandomDirection(grass);
         }
         for (int i = 0; i < ButterflyQuantity; i++)
@@ -37,7 +40,10 @@ public class EnvironmentController : MonoBehaviour
         {
             var flower = Instantiate(FlowerPrefab, GetRandomPosition(), Quaternion.identity);
             flower.transform.SetParent(gameObject.transform);
-            LayerManager.Instance.SetLayer(flower);
+
+            var spriteRenderer = flower.GetComponent<SpriteRenderer>();
+            LayerManager.Instance.SetLayer(new SpriteRenderer[] { spriteRenderer }, flower.transform.position.y);
+
             SetRandomDirection(flower);
         }
     }

@@ -19,6 +19,15 @@ public class BloodSpatterManager : MonoBehaviour
         }
     }
 
+    public SpriteRenderer[] GetBloodSpattersSpriteRenderers() {
+        SpriteRenderer[] renderers =  new SpriteRenderer[BloodSpatters.Count];
+        for (int i = 0; i < BloodSpatters.Count; i++)
+        {
+            renderers[i] = BloodSpatters[i].GetComponent<SpriteRenderer>();
+        }
+        return renderers;
+    }
+
     public void Splatter(int num)
     {
         bool isFull = true;

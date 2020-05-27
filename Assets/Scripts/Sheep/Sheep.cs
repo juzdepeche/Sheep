@@ -120,29 +120,8 @@ public class Sheep : MonoBehaviour
 
     private void ChangeLayer()
     {
-        if (GameController.Instance == null) return;
-        for (int i = 0; i < GameController.Instance.LayersLevels.Length; i++)
-        {
-            //derniere couche
-            if (i == GameController.Instance.LayersLevels.Length - 1)
-            {
-                for (int j = 0; j < spritesRenderer.Length; j++)
-                {
-                    spritesRenderer[j].sortingOrder = i + GameController.Instance.MinLayer;
-                }
-                bloodSplatterManager.SetLayer(i + GameController.Instance.MinLayer);
-            }
-            //entre 2 couches
-            else if (GameController.Instance.LayersLevels[i] >= transform.position.y && GameController.Instance.LayersLevels[i + 1] < transform.position.y)
-            {
-                for (int j = 0; j < spritesRenderer.Length; j++)
-                {
-                    spritesRenderer[j].sortingOrder = i + GameController.Instance.MinLayer;
-                }
-                bloodSplatterManager.SetLayer(i + GameController.Instance.MinLayer);
-                break;
-            }
-        }
+        LayerManager.Instance.SetLayer(spritesRenderer, transform.position.y);
+        LayerManager.Instance.SetLayer(bloodSplatterManager.GetBloodSpattersSpriteRenderers(), transform.position.y);
     }
 
     Vector2 GetNewRandomPosition(Vector2? setPosition = null)

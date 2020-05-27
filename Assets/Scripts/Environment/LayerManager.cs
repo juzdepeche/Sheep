@@ -28,24 +28,33 @@ public class LayerManager : MonoBehaviour
         SplitLevelInLayers();
     }
 
-    public void SetLayer(GameObject go)
+    public int SetLayer(SpriteRenderer[] spriteRenderers, float y)
     {
-        var spriteRenderer = go.GetComponent<SpriteRenderer>();
-        if (Instance == null || spriteRenderer) return;
+        if (Instance == null) return -1;
+
+        var layer = -1;
         for (int i = 0; i < Instance.LayersLevels.Length; i++)
         {
             //last layer
             if (i == Instance.LayersLevels.Length - 1)
             {
-                spriteRenderer.sortingOrder = i + Instance.MinLayer;
+                layer = i + Instance.MinLayer;
+                break;
             }
             //between 2 layers
-            else if (Instance.LayersLevels[i] >= go.transform.position.y && Instance.LayersLevels[i + 1] < go.transform.position.y)
+            else if (Instance.LayersLevels[i] >= y && Instance.LayersLevels[i + 1] < y)
             {
-                spriteRenderer.sortingOrder = i + Instance.MinLayer;
+                layer = i + Instance.MinLayer;
                 break;
             }
         }
+
+        foreach (var renderer in spriteRenderers)
+        {
+            renderer.sortingOrder = layer;
+        }
+
+        return layer;
     }
 
     private void SplitLevelInLayers()
