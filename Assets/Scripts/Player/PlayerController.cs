@@ -24,6 +24,13 @@ public abstract class PlayerController : MonoBehaviour
         DoStart();
     }
 
+    private void Update() {
+        if (Player.Device.CommandWasPressed || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            GameData.Instance.SetValue(GameData.ON_START, this);
+        }
+    }
+
     //Since Wolf needed Start(), DoStart is an override method to be use in its children to not override Start() 
     public virtual void DoStart()
     {

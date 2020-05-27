@@ -13,7 +13,7 @@ public abstract class Observable<T>
 		return properties[key];
 	}
 
-    public void SetValue(string key, T value) {
+    public void SetValue(string key, T value, bool callCallbacks = true) {
         if (properties.ContainsKey(key))
         {
             properties[key] = value;
@@ -23,16 +23,19 @@ public abstract class Observable<T>
             properties.Add(key, value);
         }
 
-		CallObserversFrom(key, value);
+        if (callCallbacks) 
+        {
+		    CallObserversFrom(key, value);
+        }
     }
 
     public void AddObserver(ObserverCallback<T> callback, string key) {
 		AddObserverTo(callback, key);
 	}
 
-    public void AddObserver(ObserverCallback<T> callback, string key, T value) {
+    public void AddObserver(ObserverCallback<T> callback, string key, T value, bool callCallbacks = false) {
 		AddObserverTo(callback, key);
-        SetValue(key, value);
+        SetValue(key, value, false);
 	}
 
     private void AddObserverTo(ObserverCallback<T> callback, string key) {

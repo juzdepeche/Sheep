@@ -7,4 +7,5 @@ public class GameData : Observable<PlayerController>
     public static readonly GameData Instance = new GameData();
 
     public static readonly string ON_ACTION_1 = "OnAction1";
+    public static readonly string ON_START = "OnStart";
 }

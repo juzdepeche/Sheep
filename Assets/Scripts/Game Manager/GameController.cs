@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        isGameOver = false;
         if (Instance == null)
         {
             Instance = this;
@@ -85,6 +86,7 @@ public class GameController : MonoBehaviour
         }
 
         GameData.Instance.AddObserver(OnAction1, GameData.ON_ACTION_1, null);
+        GameData.Instance.AddObserver(OnStart, GameData.ON_START, null);
 
         WolvesNumber = Wolves.Count;
         DogsNumber = Dogs.Count;
@@ -379,5 +381,10 @@ public class GameController : MonoBehaviour
     private void OnAction1(PlayerController value, string key)
     {
         Debug.Log(value);
+    }
+
+    private void OnStart(PlayerController value, string key)
+    {
+        RestartGame();
     }
 }
