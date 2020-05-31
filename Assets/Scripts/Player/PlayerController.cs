@@ -98,15 +98,8 @@ public abstract class PlayerController : MonoBehaviour
 
     protected bool KillWasPressed()
     {
-        bool wasPressed = false;
-        if (Player.ControllerType == EControllerType.Controller)
-        {
-            if (Player.Device.GetControl(InputControlType.Action1).WasPressed) wasPressed = true;
-        }
-        else
-        {
-            if (Input.GetKeyDown(Player.Action1)) wasPressed = true;
-        }
+        bool isController = Player.ControllerType == EControllerType.Controller;
+		bool wasPressed = isController ? Player.Device.GetControl(InputControlType.Action1).WasPressed : Input.GetKeyDown(Player.Action1);
 
         if (wasPressed) GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
 
@@ -115,16 +108,14 @@ public abstract class PlayerController : MonoBehaviour
 
     protected bool SpecialWasPressed()
     {
-        if (Player.ControllerType == EControllerType.Controller)
-        {
-            if (Player.Device.GetControl(InputControlType.Action3).WasPressed) return true;
-        }
-        else
-        {
-            if (Input.GetKeyDown(Player.Action3)) return true;
-        }
+        bool isController = Player.ControllerType == EControllerType.Controller;
+		return isController ? Player.Device.GetControl(InputControlType.Action3).WasPressed : Input.GetKeyDown(Player.Action3);
+    }
 
-        return false;
+    protected bool BackWasPressed()
+    {
+		bool isController = Player.ControllerType == EControllerType.Controller;
+		return isController ? Player.Device.GetControl(InputControlType.Action2).WasPressed : Input.GetKeyDown(Player.Action2);
     }
 
     protected void Bleed()
