@@ -19,13 +19,11 @@ public class Spawner : MonoBehaviour
 
     public GameObject[] SpawnSheeps(int sheepNumber)
     {
-        float cameraHeight = 2f * Camera.main.orthographicSize;
-        float cameraWidth = cameraHeight * Camera.main.aspect;
-
         GameObject[] sheeps = new GameObject[sheepNumber];
 
         for (var i = 0; i < sheepNumber; i++)
         {
+            //todo: extract these values into variables
             float x = UnityEngine.Random.Range(-8f, 8f);
             float y = UnityEngine.Random.Range(-4.5f, 4.5f);
 
@@ -47,22 +45,21 @@ public class Spawner : MonoBehaviour
         return sheeps;
     }
 
-    public GameObject SpawnWolf(Player player)
+    public GameObject SpawnWolf(Player player, Nullable<Vector2> position = null)
     {
-        float x = UnityEngine.Random.Range(-8f, 8f);
-        float y = UnityEngine.Random.Range(-4.5f, 4.5f);
+        //todo: extract these values into variables
+        position = position == null ? new Vector2(UnityEngine.Random.Range(-8f, 8f), UnityEngine.Random.Range(-4.5f, 4.5f)) : position;
 
-        Vector2 target = new Vector2(x, y);
-
-        GameObject wolf = Instantiate(Wolf, target, Quaternion.identity);
+        GameObject wolf = Instantiate(Wolf, position.GetValueOrDefault(), Quaternion.identity);
         wolf.GetComponent<Wolf>().Player = player;
         return wolf;
     }
-    public GameObject SpawnDog(Player player)
+    public GameObject SpawnDog(Player player, Nullable<Vector2> position = null)
     {
-        Vector2 target = new Vector2(0, 0);
+        //todo: extract these values into variables
+        position = position == null ? new Vector2(0, 0) : position;
 
-        GameObject dog = Instantiate(Dog, target, Quaternion.identity);
+        GameObject dog = Instantiate(Dog, position.GetValueOrDefault(), Quaternion.identity);
         dog.GetComponent<Dog>().Player = player;
         return dog;
     }

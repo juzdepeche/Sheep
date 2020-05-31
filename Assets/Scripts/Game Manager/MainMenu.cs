@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using static GameController;
 using static Player;
 
-public class PlayerManager : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     public GameObject[] Roles;
     public GameObject[] Controllers;
@@ -31,6 +31,9 @@ public class PlayerManager : MonoBehaviour
 
     public float ProgressBarSpeed = 30f;
 
+    [SerializeField]
+    private Transform[] PlayerSpawnPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +52,8 @@ public class PlayerManager : MonoBehaviour
                 bool playerAlreadyCreated = CreatePlayerForDevice(device);
                 if (playerAlreadyCreated)
                 {
-                    LockRoleForPlayer(device.GUID);
+                    Player player = LockRoleForPlayer(device.GUID);
+                    AddPlayer(player);
                 }
             }
 
@@ -60,6 +64,7 @@ public class PlayerManager : MonoBehaviour
                 if (playerAlreadyCreated)
                 {
                     UnlockRoleForPlayer(device.GUID);
+                    //RemovePlayer()
                 }
             }
 
@@ -91,7 +96,8 @@ public class PlayerManager : MonoBehaviour
             bool playerAlreadyCreated = CreatePlayerForDevice(null, "Space");
             if (playerAlreadyCreated)
             {
-                LockRoleForPlayer(Guid.Empty, "Space");
+                Player player = LockRoleForPlayer(Guid.Empty, "Space");
+                AddPlayer(player);
             }
         }
 
@@ -100,7 +106,8 @@ public class PlayerManager : MonoBehaviour
             bool playerAlreadyCreated = CreatePlayerForDevice(null, "Enter");
             if (playerAlreadyCreated)
             {
-                LockRoleForPlayer(Guid.Empty, "Enter");
+                Player player = LockRoleForPlayer(Guid.Empty, "Enter");
+                AddPlayer(player);
             }
         }
 
@@ -143,6 +150,26 @@ public class PlayerManager : MonoBehaviour
         return true;
     }
 
+    private void AddPlayer(Player player)
+    {
+        if (player == null) return;
+
+        switch (player.Role)
+        {
+            case PlayerType.Dog:
+                Spawner.Instance.SpawnDog(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                break;
+            case PlayerType.Wolf:
+                Spawner.Instance.SpawnWolf(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                break;
+        }
+    }
+
+    private Vector2 GetMenuSpawnPositionFromPlayerIndex(int playerIndex)
+    {
+        return new Vector2(PlayerSpawnPosition[playerIndex].position.x, PlayerSpawnPosition[playerIndex].position.y);
+    }
+
     private void LoadProgressBar()
     {
         if (MainMenuProgressBar.ProgressBarValue < 100)
@@ -166,28 +193,22 @@ public class PlayerManager : MonoBehaviour
 
         player.RoleLocked = false;
 
-        var tempColor = Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().color;
-        tempColor.r = 255f;
-        tempColor.g = 255f;
-        tempColor.b = 255f;
-
-        Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().color = tempColor;
+        var color = ColorUtils.ToColor(Roles[player.Index].GetComponent<SpriteRenderer>().color);
+        Roles[player.Index].GetComponent<SpriteRenderer>().color = color;
     }
 
-    private void LockRoleForPlayer(Guid guid, string keyboardType = null)
+    private Player LockRoleForPlayer(Guid guid, string keyboardType = null)
     {
         Player player = keyboardType != null ? GetPlayerFromKeyboardType(keyboardType) : GetPlayerFromDeviceGUID(guid);
 
-        if (player == null || player.RoleLocked) return;
+        if (player == null || player.RoleLocked) return null;
 
         player.RoleLocked = true;
 
-        var tempColor = Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().color;
-        tempColor.r = 0f;
-        tempColor.g = 0f;
-        tempColor.b = 0f;
+        var color = ColorUtils.ToBlack(Roles[player.Index].GetComponent<SpriteRenderer>().color);
+        Roles[player.Index].GetComponent<SpriteRenderer>().color = color;
 
-        Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().color = tempColor;
+        return player;
     }
 
     private void ChangeRole(Guid guid, string keyboardType = null)
@@ -205,16 +226,16 @@ public class PlayerManager : MonoBehaviour
 
         if (player == null || player.RoleLocked) return;
 
-        //set la face du joueur
+        //set role and role image in menu
         if (player.Role == PlayerType.Dog)
         {
             player.Role = PlayerType.Wolf;
-            Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().sprite = WolfFaceSprite;
+            Roles[player.Index].GetComponent<SpriteRenderer>().sprite = WolfFaceSprite;
         }
         else
         {
             player.Role = PlayerType.Dog;
-            Roles[player.PlayerIndex].GetComponent<SpriteRenderer>().sprite = DogFaceSprite;
+            Roles[player.Index].GetComponent<SpriteRenderer>().sprite = DogFaceSprite;
         }
     }
 
@@ -244,7 +265,7 @@ public class PlayerManager : MonoBehaviour
             newPlayer = new Player(device, currentPlayerIndex, PlayerType.Dog, EControllerType.Controller);
         }
 
-        //set la face du joueur
+        //set role image
         if (newPlayer.Role == PlayerType.Dog)
         {
             Roles[currentPlayerIndex].GetComponent<SpriteRenderer>().sprite = DogFaceSprite;

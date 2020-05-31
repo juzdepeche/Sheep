@@ -14,7 +14,7 @@ public class Player
     }
 
     public InputDevice Device;
-    public int PlayerIndex;
+    public int Index;
     public PlayerType Role;
     public bool RoleLocked = false;
     public EControllerType ControllerType;
@@ -31,7 +31,7 @@ public class Player
     public Player(InputDevice device, int index, PlayerType role, EControllerType controllerType)
     {
         Device = device;
-        PlayerIndex = index;
+        Index = index;
         Role = role;
         ControllerType = controllerType;
 

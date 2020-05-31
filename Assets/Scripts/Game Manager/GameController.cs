@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour
     {
         Wolves = new List<GameObject>();
         Dogs = new List<GameObject>();
-
+        
         wolfGoal.text = wolfScoreGoal.ToString();
 
         if (PlayerDevicesData.Players != null)
