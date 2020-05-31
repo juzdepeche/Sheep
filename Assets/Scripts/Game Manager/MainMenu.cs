@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameController;
@@ -39,10 +40,36 @@ public class MainMenu : MonoBehaviour
     {
         players = new List<Player>();
         deviceGUID = new List<Guid>();
+        MainMenuProgressBar.Instance.Hide();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        ControllerDeviceInput();
+        KeyboardInput();
+
+        //load game
+        int wolvesCount = players.Where(p => p.Role == PlayerType.Wolf).Count();
+        int dogsCount = players.Where(p => p.Role == PlayerType.Wolf).Count();
+        if (wolvesCount > 0 && dogsCount > 0 && AllPlayersAreLocked())
+        {
+            LoadProgressBar();
+        }
+        else
+        {
+            UnloadProgressBar();
+        }
+
+        //Start game
+        if (MainMenuProgressBar.Instance.ProgressBarValue >= 100)
+        {
+            PlayerDevicesData.Players = players;
+            SceneManager.LoadScene("Simple");
+        }
+    }
+
+    private void ControllerDeviceInput()
     {
         foreach (var device in InputManager.Devices)
         {
@@ -89,7 +116,10 @@ public class MainMenu : MonoBehaviour
                 ChangeRole(device.GUID);
             }
         }
+    }
 
+    private void KeyboardInput()
+    {
         //Keyboard inputs
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -118,23 +148,6 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeRole(Guid.Empty, "Enter");
-        }
-
-        //load game
-        if (players.Count >= 2 && AllPlayersAreLocked())
-        {
-            LoadProgressBar();
-        }
-        else
-        {
-            UnloadProgressBar();
-        }
-
-        //Start game
-        if (MainMenuProgressBar.ProgressBarValue >= 100)
-        {
-            PlayerDevicesData.Players = players;
-            SceneManager.LoadScene("Simple");
         }
     }
 
@@ -172,17 +185,27 @@ public class MainMenu : MonoBehaviour
 
     private void LoadProgressBar()
     {
-        if (MainMenuProgressBar.ProgressBarValue < 100)
+        if (MainMenuProgressBar.Instance.ProgressBarValue < 100)
         {
-            MainMenuProgressBar.ProgressBarValue += ProgressBarSpeed * Time.deltaTime;
+            MainMenuProgressBar.Instance.ProgressBarValue += ProgressBarSpeed * Time.deltaTime;
+        }
+
+        if (!MainMenuProgressBar.Instance.Shown && MainMenuProgressBar.Instance.ProgressBarValue > 0)
+        {
+            MainMenuProgressBar.Instance.Show();
         }
     }
 
     private void UnloadProgressBar()
     {
-        if (MainMenuProgressBar.ProgressBarValue > 0)
+        if (MainMenuProgressBar.Instance.ProgressBarValue > 0)
         {
-            MainMenuProgressBar.ProgressBarValue -= ProgressBarSpeed * Time.deltaTime;
+            MainMenuProgressBar.Instance.ProgressBarValue -= ProgressBarSpeed * Time.deltaTime;
+        }
+
+        if (MainMenuProgressBar.Instance.Shown && MainMenuProgressBar.Instance.ProgressBarValue <= 0)
+        {
+            MainMenuProgressBar.Instance.Hide();
         }
     }
 
