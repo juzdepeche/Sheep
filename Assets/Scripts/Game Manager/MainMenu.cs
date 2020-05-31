@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour
 
         //load game
         int wolvesCount = players.Where(p => p.Role == PlayerType.Wolf).Count();
-        int dogsCount = players.Where(p => p.Role == PlayerType.Wolf).Count();
+        int dogsCount = players.Where(p => p.Role == PlayerType.Dog).Count();
         if (wolvesCount > 0 && dogsCount > 0 && AllPlayersAreLocked())
         {
             LoadProgressBar();
