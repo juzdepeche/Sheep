@@ -51,7 +51,7 @@ public class Wolf : PlayerController
 
     private void Update()
     {
-        if (KillWasPressed())
+        if (Action1WasPressed())
         {
             Kill();
         }
@@ -66,7 +66,7 @@ public class Wolf : PlayerController
                 TryGetInNewBody();
             }
         }
-        if (SpecialWasPressed())
+        if (Action3WasPressed())
         {
             AskAhou();
         }

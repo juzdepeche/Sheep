@@ -46,10 +46,59 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ControllerDeviceInput();
-        KeyboardInput();
+        HandlePlayerCommands();
+        CreatePlayers();
+        
+        LoadGame();
+    }
 
-        //load game
+    private void HandlePlayerCommands()
+    {
+        foreach (Player player in players)
+        {
+            if(player.Action1WasPressed())
+            {
+                LockRoleForPlayer(player.GetGUID());
+                AddPlayer(player);
+            }
+
+            if(player.Action2WasPressed())
+            {
+                UnlockRoleForPlayer(player.GetGUID());
+            }
+
+            if (player.LeftWasPressed() || player.RightWasPressed())
+            {
+                ChangeRole(player.GetGUID());
+            }
+        }
+    }
+
+    private void CreatePlayers()
+    {
+        var playerDevices = players.Where(p => p.Device != null).Select(p => p.Device).ToArray();
+        var nonRegisteredDevices = InputManager.Devices.Where(d => !playerDevices.Any(pd => pd.GUID == d.GUID)).ToArray();
+        foreach (var device in nonRegisteredDevices)
+        {
+            if (device.GetControl(InputControlType.Action1).WasPressed)
+            {
+                CreatePlayerForDevice(device);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CreatePlayerForDevice(null, "Space");
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            CreatePlayerForDevice(null, "Enter");
+        }
+    }
+
+    private void LoadGame()
+    {
         int wolvesCount = players.Where(p => p.Role == PlayerType.Wolf).Count();
         int dogsCount = players.Where(p => p.Role == PlayerType.Dog).Count();
         if (wolvesCount > 0 && dogsCount > 0 && AllPlayersAreLocked())
@@ -66,88 +115,6 @@ public class MainMenu : MonoBehaviour
         {
             PlayerDevicesData.Players = players;
             SceneManager.LoadScene("Simple");
-        }
-    }
-
-    private void ControllerDeviceInput()
-    {
-        foreach (var device in InputManager.Devices)
-        {
-            //join/lock
-            if (device.GetControl(InputControlType.Action1).WasPressed)
-            {
-                bool playerAlreadyCreated = CreatePlayerForDevice(device);
-                if (playerAlreadyCreated)
-                {
-                    Player player = LockRoleForPlayer(device.GUID);
-                    AddPlayer(player);
-                }
-            }
-
-            //unlock
-            if (device.GetControl(InputControlType.Action2).WasPressed)
-            {
-                bool playerAlreadyCreated = CreatePlayerForDevice(device);
-                if (playerAlreadyCreated)
-                {
-                    UnlockRoleForPlayer(device.GUID);
-                    //RemovePlayer()
-                }
-            }
-
-            //joystick (changerole)
-            if (device.LeftStickX > 0.7 || device.LeftStickX < -0.9)
-            {
-                currentTimeChangeRole += Time.deltaTime;
-                if (intervalChangeRole < currentTimeChangeRole)
-                {
-                    ChangeRole(device.GUID);
-                    currentTimeChangeRole = 0;
-                }
-            }
-            else
-            {
-                currentTimeChangeRole = 0;
-            }
-
-            //dpad c(change role)
-            if (device.DPadLeft.WasPressed || device.DPadRight.WasPressed)
-            {
-                ChangeRole(device.GUID);
-            }
-        }
-    }
-
-    private void KeyboardInput()
-    {
-        //Keyboard inputs
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            bool playerAlreadyCreated = CreatePlayerForDevice(null, "Space");
-            if (playerAlreadyCreated)
-            {
-                Player player = LockRoleForPlayer(Guid.Empty, "Space");
-                AddPlayer(player);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            bool playerAlreadyCreated = CreatePlayerForDevice(null, "Enter");
-            if (playerAlreadyCreated)
-            {
-                Player player = LockRoleForPlayer(Guid.Empty, "Enter");
-                AddPlayer(player);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-        {
-            ChangeRole(Guid.Empty, "Space");
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            ChangeRole(Guid.Empty, "Enter");
         }
     }
 
@@ -209,7 +176,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void UnlockRoleForPlayer(Guid guid)
+    private void UnlockRoleForPlayer(string guid)
     {
         Player player = GetPlayerFromDeviceGUID(guid);
         if (player == null) return;
@@ -220,9 +187,9 @@ public class MainMenu : MonoBehaviour
         Roles[player.Index].GetComponent<SpriteRenderer>().color = color;
     }
 
-    private Player LockRoleForPlayer(Guid guid, string keyboardType = null)
+    private Player LockRoleForPlayer(string guid)
     {
-        Player player = keyboardType != null ? GetPlayerFromKeyboardType(keyboardType) : GetPlayerFromDeviceGUID(guid);
+        Player player = GetPlayerFromDeviceGUID(guid);
 
         if (player == null || player.RoleLocked) return null;
 
@@ -234,18 +201,9 @@ public class MainMenu : MonoBehaviour
         return player;
     }
 
-    private void ChangeRole(Guid guid, string keyboardType = null)
+    private void ChangeRole(string guid, string keyboardType = null)
     {
-        Player player = null;
-
-        if(keyboardType != null)
-        {
-            player = GetPlayerFromKeyboardType(keyboardType);
-        }
-        else
-        {
-            player = GetPlayerFromDeviceGUID(guid);
-        }
+        Player player = GetPlayerFromDeviceGUID(guid);
 
         if (player == null || player.RoleLocked) return;
 
@@ -344,28 +302,8 @@ public class MainMenu : MonoBehaviour
         return false;
     }
 
-    private Player GetPlayerFromDeviceGUID(Guid guid)
+    private Player GetPlayerFromDeviceGUID(string guid)
     {
-        foreach (var player in players)
-        {
-            if (player.Device == null) continue;
-            if (player.Device.GUID == guid)
-            {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    private Player GetPlayerFromKeyboardType(string keyboardType)
-    {
-        foreach (var player in players)
-        {
-            if (player.KeyboardType == keyboardType)
-            {
-                return player;
-            }
-        }
-        return null;
+        return players.Where(p => p.GetGUID() == guid).First();
     }
 }

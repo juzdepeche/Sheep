@@ -33,11 +33,11 @@ public class Dog : PlayerController
 
     private void Update()
     {
-        if (KillWasPressed())
+        if (Action1WasPressed())
         {
             Kill();
         }
-        if (SpecialWasPressed())
+        if (Action3WasPressed())
         {
             AskWoofWoof();
         }

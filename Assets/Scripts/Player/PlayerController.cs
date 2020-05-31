@@ -96,26 +96,23 @@ public abstract class PlayerController : MonoBehaviour
         LayerManager.Instance.SetLayer(new SpriteRenderer[] { sprite }, transform.position.y);
     }
 
-    protected bool KillWasPressed()
+    protected bool Action1WasPressed()
     {
-        bool isController = Player.ControllerType == EControllerType.Controller;
-		bool wasPressed = isController ? Player.Device.GetControl(InputControlType.Action1).WasPressed : Input.GetKeyDown(Player.Action1);
+        bool wasPressed = Player.Action1WasPressed();
 
         if (wasPressed) GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
 
         return wasPressed;
     }
 
-    protected bool SpecialWasPressed()
+    protected bool Action2WasPressed()
     {
-        bool isController = Player.ControllerType == EControllerType.Controller;
-		return isController ? Player.Device.GetControl(InputControlType.Action3).WasPressed : Input.GetKeyDown(Player.Action3);
+		return Player.Action2WasPressed();
     }
 
-    protected bool BackWasPressed()
+    protected bool Action3WasPressed()
     {
-		bool isController = Player.ControllerType == EControllerType.Controller;
-		return isController ? Player.Device.GetControl(InputControlType.Action2).WasPressed : Input.GetKeyDown(Player.Action2);
+        return  Player.Action3WasPressed();
     }
 
     protected void Bleed()
