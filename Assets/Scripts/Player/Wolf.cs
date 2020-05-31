@@ -106,7 +106,8 @@ public class Wolf : PlayerController
         hasBody = false;
         sprite.sprite = WolfWithoutSheepSprite;
         Speed *= 2.5f;
-        GameController.Instance.WolfGetOutFromBody(transform.position, bloodSpatterManager.BloodSpattersBool);
+        //todo: use observable
+        // GameController.Instance.WolfGetOutFromBody(transform.position, bloodSpatterManager.BloodSpattersBool);
         bloodSpatterManager.RemoveAll();
     }
 
@@ -155,6 +156,7 @@ public class Wolf : PlayerController
         Shadow.SetActive(false);
         dead = true;
         ExitBody();
+        
         Blood.SetActive(true);
     }
 }

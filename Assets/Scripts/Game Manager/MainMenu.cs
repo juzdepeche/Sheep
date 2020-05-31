@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
     public Sprite ControllerSprite;
 
     public List<PlayerInput> players;
-    public List<PlayerController> playablePlayers;
+    public Dictionary<string, PlayerController> playablePlayers;
     private List<Guid> deviceGUID;
 
     private bool InMainMenu = true;
@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         players = new List<PlayerInput>();
+        playablePlayers = new Dictionary<string, PlayerController>();
         deviceGUID = new List<Guid>();
         MainMenuProgressBar.Instance.Hide();
     }
@@ -57,6 +58,8 @@ public class MainMenu : MonoBehaviour
         {
             if(player.Action1WasPressed())
             {
+                if(player.RoleLocked) return;
+
                 LockRoleForPlayer(player.GetGUID());
                 AddPlayer(player);
             }
@@ -64,10 +67,13 @@ public class MainMenu : MonoBehaviour
             if(player.Action2WasPressed())
             {
                 UnlockRoleForPlayer(player.GetGUID());
+                RemovePlayer(player);
             }
 
             if (player.LeftWasPressed() || player.RightWasPressed())
             {
+                if(player.RoleLocked) return;
+
                 ChangeRole(player.GetGUID());
             }
         }
@@ -136,12 +142,25 @@ public class MainMenu : MonoBehaviour
         switch (player.Role)
         {
             case PlayerType.Dog:
-                Spawner.Instance.SpawnDog(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                var dog = Spawner.Instance.SpawnDog(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                playablePlayers.Add(player.GetGUID(), dog.GetComponent<Dog>());
                 break;
             case PlayerType.Wolf:
-                Spawner.Instance.SpawnWolf(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                var wolf = Spawner.Instance.SpawnWolf(player, GetMenuSpawnPositionFromPlayerIndex(player.Index));
+                playablePlayers.Add(player.GetGUID(), wolf.GetComponent<Wolf>());
                 break;
         }
+    }
+
+    private void RemovePlayer(PlayerInput player)
+    {
+        if (player == null) return;
+
+        var playablePlayer = playablePlayers[player.GetGUID()];
+
+        if (playablePlayer == null) return;
+        playablePlayers.Remove(player.GetGUID());
+        playablePlayer.Die();
     }
 
     private Vector2 GetMenuSpawnPositionFromPlayerIndex(int playerIndex)
