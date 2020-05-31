@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Player;
+using static PlayerInput;
 
 public class Wolf : PlayerController
 {
@@ -74,13 +74,13 @@ public class Wolf : PlayerController
 
     private bool BodyWasPressed()
     {
-        if (Player.ControllerType == EControllerType.Controller)
+        if (PlayerInput.ControllerType == EControllerType.Controller)
         {
-            if (Player.Device.GetControl(InputControlType.Action4).WasPressed) return true;
+            if (PlayerInput.Device.GetControl(InputControlType.Action4).WasPressed) return true;
         }
         else
         {
-            if (Input.GetKeyDown(Player.Action4)) return true;
+            if (Input.GetKeyDown(PlayerInput.Action4)) return true;
         }
 
         return false;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class PlayerDevicesData
 {
-    private static List<Player> players;
+    private static List<PlayerInput> players;
 
-    public static List<Player> Players
+    public static List<PlayerInput> Players
     {
         get
         {

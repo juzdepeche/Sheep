@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Player;
+using static PlayerInput;
 
 public class Dog : PlayerController
 {

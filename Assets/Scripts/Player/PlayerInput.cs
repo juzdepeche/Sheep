@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameController;
 
-public class Player
+public class PlayerInput
 {
     public enum EControllerType
     {
@@ -30,7 +30,7 @@ public class Player
     public KeyCode Action3;
     public KeyCode Action4;
 
-    public Player(InputDevice device, int index, PlayerType role, EControllerType controllerType)
+    public PlayerInput(InputDevice device, int index, PlayerType role, EControllerType controllerType)
     {
         Device = device;
         Index = index;

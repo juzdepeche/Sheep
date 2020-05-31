@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameController;
-using static Player;
+using static PlayerInput;
 
 public class MainMenu : MonoBehaviour
 {
@@ -20,7 +20,8 @@ public class MainMenu : MonoBehaviour
     public Sprite Keyboard2Sprite;
     public Sprite ControllerSprite;
 
-    public List<Player> players;
+    public List<PlayerInput> players;
+    public List<PlayerController> playablePlayers;
     private List<Guid> deviceGUID;
 
     private bool InMainMenu = true;
@@ -35,15 +36,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private Transform[] PlayerSpawnPosition;
 
-    // Start is called before the first frame update
     void Start()
     {
-        players = new List<Player>();
+        players = new List<PlayerInput>();
         deviceGUID = new List<Guid>();
         MainMenuProgressBar.Instance.Hide();
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandlePlayerCommands();
@@ -54,7 +53,7 @@ public class MainMenu : MonoBehaviour
 
     private void HandlePlayerCommands()
     {
-        foreach (Player player in players)
+        foreach (PlayerInput player in players)
         {
             if(player.Action1WasPressed())
             {
@@ -130,7 +129,7 @@ public class MainMenu : MonoBehaviour
         return true;
     }
 
-    private void AddPlayer(Player player)
+    private void AddPlayer(PlayerInput player)
     {
         if (player == null) return;
 
@@ -178,7 +177,7 @@ public class MainMenu : MonoBehaviour
 
     private void UnlockRoleForPlayer(string guid)
     {
-        Player player = GetPlayerFromDeviceGUID(guid);
+        PlayerInput player = GetPlayerFromDeviceGUID(guid);
         if (player == null) return;
 
         player.RoleLocked = false;
@@ -187,9 +186,9 @@ public class MainMenu : MonoBehaviour
         Roles[player.Index].GetComponent<SpriteRenderer>().color = color;
     }
 
-    private Player LockRoleForPlayer(string guid)
+    private PlayerInput LockRoleForPlayer(string guid)
     {
-        Player player = GetPlayerFromDeviceGUID(guid);
+        PlayerInput player = GetPlayerFromDeviceGUID(guid);
 
         if (player == null || player.RoleLocked) return null;
 
@@ -203,7 +202,7 @@ public class MainMenu : MonoBehaviour
 
     private void ChangeRole(string guid, string keyboardType = null)
     {
-        Player player = GetPlayerFromDeviceGUID(guid);
+        PlayerInput player = GetPlayerFromDeviceGUID(guid);
 
         if (player == null || player.RoleLocked) return;
 
@@ -222,18 +221,18 @@ public class MainMenu : MonoBehaviour
 
     private bool CreatePlayerForDevice(InputDevice device, string keyboard = null)
     {
-        Player newPlayer = null;
+        PlayerInput newPlayer = null;
         if (device == null)
         {
             if(keyboard == "Space")
             {
                 if (CheckPlayerKeyboard(EControllerType.Keyboard1)) return true;
-                newPlayer = new Player(null, currentPlayerIndex, PlayerType.Dog, EControllerType.Keyboard1);
+                newPlayer = new PlayerInput(null, currentPlayerIndex, PlayerType.Dog, EControllerType.Keyboard1);
             }
             else if(keyboard == "Enter")
             {
                 if (CheckPlayerKeyboard(EControllerType.Keyboard2)) return true;
-                newPlayer = new Player(null, currentPlayerIndex, PlayerType.Dog, EControllerType.Keyboard2);
+                newPlayer = new PlayerInput(null, currentPlayerIndex, PlayerType.Dog, EControllerType.Keyboard2);
             }
         }
         else
@@ -243,7 +242,7 @@ public class MainMenu : MonoBehaviour
             if (alreadyCreated) return true;
 
             //set autrement aleatoirement ou choisit le role
-            newPlayer = new Player(device, currentPlayerIndex, PlayerType.Dog, EControllerType.Controller);
+            newPlayer = new PlayerInput(device, currentPlayerIndex, PlayerType.Dog, EControllerType.Controller);
         }
 
         //set role image
@@ -302,7 +301,7 @@ public class MainMenu : MonoBehaviour
         return false;
     }
 
-    private Player GetPlayerFromDeviceGUID(string guid)
+    private PlayerInput GetPlayerFromDeviceGUID(string guid)
     {
         return players.Where(p => p.GetGUID() == guid).First();
     }

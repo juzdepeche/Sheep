@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Player;
+using static PlayerInput;
 
 public abstract class PlayerController : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public abstract class PlayerController : MonoBehaviour
     public GameObject Blood;
     public GameObject Shadow;
 
-    public Player Player;
+    public PlayerInput PlayerInput;
 
     public bool dead;
 
@@ -25,7 +25,7 @@ public abstract class PlayerController : MonoBehaviour
     }
 
     private void Update() {
-        if (Player.Device.CommandWasPressed || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (PlayerInput.Device.CommandWasPressed || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             GameData.Instance.SetValue(GameData.ON_START, this);
         }
@@ -62,15 +62,15 @@ public abstract class PlayerController : MonoBehaviour
         axis[0] = 0;
         axis[1] = 0;
 
-        if (Player.Device != null)
+        if (PlayerInput.Device != null)
         {
-            axis[0] = Player.Device.LeftStickX;
-            axis[1] = Player.Device.LeftStickY;
+            axis[0] = PlayerInput.Device.LeftStickX;
+            axis[1] = PlayerInput.Device.LeftStickY;
         }
         else
         {
-            axis[0] = Input.GetAxis(Player.InputAxeX);
-            axis[1] = Input.GetAxis(Player.InputAxeY);
+            axis[0] = Input.GetAxis(PlayerInput.InputAxeX);
+            axis[1] = Input.GetAxis(PlayerInput.InputAxeY);
         }
 
         return axis;
@@ -98,7 +98,7 @@ public abstract class PlayerController : MonoBehaviour
 
     protected bool Action1WasPressed()
     {
-        bool wasPressed = Player.Action1WasPressed();
+        bool wasPressed = PlayerInput.Action1WasPressed();
 
         if (wasPressed) GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
 
@@ -107,12 +107,12 @@ public abstract class PlayerController : MonoBehaviour
 
     protected bool Action2WasPressed()
     {
-		return Player.Action2WasPressed();
+		return PlayerInput.Action2WasPressed();
     }
 
     protected bool Action3WasPressed()
     {
-        return  Player.Action3WasPressed();
+        return  PlayerInput.Action3WasPressed();
     }
 
     protected void Bleed()

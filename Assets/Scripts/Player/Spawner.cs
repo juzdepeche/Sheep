@@ -45,22 +45,22 @@ public class Spawner : MonoBehaviour
         return sheeps;
     }
 
-    public GameObject SpawnWolf(Player player, Nullable<Vector2> position = null)
+    public GameObject SpawnWolf(PlayerInput player, Nullable<Vector2> position = null)
     {
         //todo: extract these values into variables
         position = position == null ? new Vector2(UnityEngine.Random.Range(-8f, 8f), UnityEngine.Random.Range(-4.5f, 4.5f)) : position;
 
         GameObject wolf = Instantiate(Wolf, position.GetValueOrDefault(), Quaternion.identity);
-        wolf.GetComponent<Wolf>().Player = player;
+        wolf.GetComponent<Wolf>().PlayerInput = player;
         return wolf;
     }
-    public GameObject SpawnDog(Player player, Nullable<Vector2> position = null)
+    public GameObject SpawnDog(PlayerInput player, Nullable<Vector2> position = null)
     {
         //todo: extract these values into variables
         position = position == null ? new Vector2(0, 0) : position;
 
         GameObject dog = Instantiate(Dog, position.GetValueOrDefault(), Quaternion.identity);
-        dog.GetComponent<Dog>().Player = player;
+        dog.GetComponent<Dog>().PlayerInput = player;
         return dog;
     }
 

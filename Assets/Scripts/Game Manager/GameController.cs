@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
 
         if (PlayerDevicesData.Players != null)
         {
-            foreach (Player player in PlayerDevicesData.Players)
+            foreach (PlayerInput player in PlayerDevicesData.Players)
             {
                 switch (player.Role)
                 {
