@@ -12,7 +12,7 @@ public class LayerManager : MonoBehaviour
     private float cameraHeight;
 
     [SerializeField]
-    private int LayersNumber;
+    private int LayersNumber = 70;
 
     private void Awake()
     {

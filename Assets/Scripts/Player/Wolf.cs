@@ -9,7 +9,6 @@ public class Wolf : PlayerController
 {
     public float Speed;
     public float SpeedMultiplier = 1.5f;
-    public Transform Mouth;
     private Vector3 movement;
 
     private bool hasBody = true;
@@ -68,7 +67,7 @@ public class Wolf : PlayerController
         }
         if (Action3WasPressed())
         {
-            AskAhou();
+            GameData.Instance.SetValue(GameData.ON_ACTION_3, this);
         }
     }
 
@@ -131,11 +130,6 @@ public class Wolf : PlayerController
         isRunning = false;
         Speed /= SpeedMultiplier;
         if (hasBody) sprite.sprite = SheepSprite;
-    }
-
-    private void AskAhou()
-    {
-        bool hasAhou = GameController.Instance.AskAhou();
     }
 
     public void Hide()

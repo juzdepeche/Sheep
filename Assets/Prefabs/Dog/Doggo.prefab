@@ -99,10 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Blood: {fileID: 4128850899213565343}
   Shadow: {fileID: 9052366814834209120}
+  Mouth: {fileID: 1637144059456698975}
   dead: 0
   Direction: 0
   Speed: 3
-  Mouth: {fileID: 1637144059456698974}
 --- !u!70 &1637144059313282857
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.43775237, y: -2.264252}
+  m_Offset: {x: -0.2, y: -2.264252}
   m_Size: {x: 6.769728, y: 5.4715424}
   m_Direction: 1
 --- !u!50 &1637144059313282856

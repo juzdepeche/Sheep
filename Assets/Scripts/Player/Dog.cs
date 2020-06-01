@@ -7,7 +7,6 @@ using static PlayerInput;
 public class Dog : PlayerController
 {
     public float Speed;
-    public GameObject Mouth;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -44,17 +43,12 @@ public class Dog : PlayerController
         }
         if (Action3WasPressed())
         {
-            AskWoofWoof();
+            GameData.Instance.SetValue(GameData.ON_ACTION_3, this);
         }
     }
 
     public override void Kill()
     {
         GameController.Instance.KillSheepFromDog(Mouth.transform.position);
-    }
-
-    private void AskWoofWoof()
-    {
-        bool hasWoofed = GameController.Instance.AskWoofWoof(Mouth.transform.position);
     }
 }

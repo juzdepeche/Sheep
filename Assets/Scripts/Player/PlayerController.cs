@@ -9,6 +9,7 @@ public abstract class PlayerController : MonoBehaviour
     //sprite gameobject
     public GameObject Blood;
     public GameObject Shadow;
+    public Transform Mouth;
 
     public PlayerInput PlayerInput;
 

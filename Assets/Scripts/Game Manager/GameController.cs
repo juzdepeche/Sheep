@@ -86,6 +86,7 @@ public class GameController : MonoBehaviour
         }
 
         GameData.Instance.AddObserver(OnAction1, GameData.ON_ACTION_1, null);
+        GameData.Instance.AddObserver(OnAction3, GameData.ON_ACTION_3, null);
         GameData.Instance.AddObserver(OnStart, GameData.ON_START, null);
         GameData.Instance.AddObserver(OnWolfBodyExit, GameData.ON_WOLF_BODY_EXIT, null);
 
@@ -273,19 +274,30 @@ public class GameController : MonoBehaviour
         //Spawner.Instance.SpawnBoule(wolfPosition);
     }
 
-    public bool AskWoofWoof(Vector2 doggoMouth)
+    // private void SheepsGoToFromDog(Vector2 doggoMouth, float time)
+    // {
+    //     foreach (GameObject sheep in Sheeps)
+    //     {
+    //         if (sheep.gameObject != null)
+    //         {
+    //             if (murderReactRange > Vector2.Distance(doggoMouth, sheep.transform.position))
+    //             {
+    //                 sheep.GetComponent<Sheep>().GoTo(doggoMouth, UnityEngine.Random.Range(time, time + 1f));
+    //             }
+    //         }
+    //     }
+    // }
+
+    public void DoDogSuperAttack(Vector2 doggoMouth)
     {
-        if (SpecialAttackTurn == PlayerType.Dog && ProgressBar.SpecialValue > 100)
+        if (SpecialAttackTurn == PlayerType.Dog && ProgressBar.SpecialValue >= 100)
         {
             FleeSheepsFromDog(doggoMouth, 2f, false);
-            //SheepsGoToFromDog(doggoMouth, 1f);
             SpecialAttackTurn = PlayerType.Wolf;
             ProgressBar.SpecialValue = 0;
             FaceImage.sprite = WolfFace;
             AudioManager.Instance.Bark();
-            return true;
         }
-        return false;
     }
 
     private void FleeSheepsFromDog(Vector2 doggoMouth, float time, bool bleed)
@@ -300,35 +312,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void SheepsGoToFromDog(Vector2 doggoMouth, float time)
-    {
-        foreach (GameObject sheep in Sheeps)
-        {
-            if (sheep.gameObject != null)
-            {
-                if (murderReactRange > Vector2.Distance(doggoMouth, sheep.transform.position))
-                {
-                    sheep.GetComponent<Sheep>().GoTo(doggoMouth, UnityEngine.Random.Range(time, time + 1f));
-                }
-            }
-        }
-    }
-
-    public bool AskAhou()
-    {
-        if (SpecialAttackTurn == PlayerType.Wolf && ProgressBar.SpecialValue >= 100)
-        {
-            isNightDropping = true;
-            HideSheeps();
-            SpecialAttackTurn = PlayerType.Dog;
-            FaceImage.sprite = DogFace;
-            ProgressBar.SpecialValue = 0;
-            AudioManager.Instance.Howl();
-            return true;
-        }
-        return false;
     }
 
     private void HideSheeps()
@@ -351,6 +334,19 @@ public class GameController : MonoBehaviour
             }
         }
         StartCoroutine(ShowSheeps());
+    }
+
+    public void DoWolfSuperAttack()
+    {
+        if (SpecialAttackTurn == PlayerType.Wolf && ProgressBar.SpecialValue >= 100)
+        {
+            isNightDropping = true;
+            HideSheeps();
+            SpecialAttackTurn = PlayerType.Dog;
+            FaceImage.sprite = DogFace;
+            ProgressBar.SpecialValue = 0;
+            AudioManager.Instance.Howl();
+        }
     }
 
     private IEnumerator ShowSheeps()
@@ -382,6 +378,19 @@ public class GameController : MonoBehaviour
     private void OnAction1(PlayerController value, string key)
     {
         Debug.Log(value);
+    }
+
+    private void OnAction3(PlayerController player, string key)
+    {
+        switch(player.PlayerInput.Role)
+        {
+            case PlayerType.Dog:
+                DoDogSuperAttack(player.Mouth.transform.position);
+                break;
+            case PlayerType.Wolf:
+                DoWolfSuperAttack();
+                break;
+        }
     }
 
     private void OnStart(PlayerController value, string key)
