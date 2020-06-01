@@ -87,6 +87,7 @@ public class GameController : MonoBehaviour
 
         GameData.Instance.AddObserver(OnAction1, GameData.ON_ACTION_1, null);
         GameData.Instance.AddObserver(OnStart, GameData.ON_START, null);
+        GameData.Instance.AddObserver(OnWolfBodyExit, GameData.ON_WOLF_BODY_EXIT, null);
 
         WolvesNumber = Wolves.Count;
         DogsNumber = Dogs.Count;
@@ -265,10 +266,10 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    public void WolfGetOutFromBody(Vector2 wolfPosition, bool[] blood)
+    public void OnWolfBodyExit(PlayerController player, string key)
     {
         AudioManager.Instance.SwitchToStressMusic();
-        AudioManager.Instance.Howl();
+        //todo: particles
         //Spawner.Instance.SpawnBoule(wolfPosition);
     }
 

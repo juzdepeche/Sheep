@@ -106,8 +106,8 @@ public class Wolf : PlayerController
         hasBody = false;
         sprite.sprite = WolfWithoutSheepSprite;
         Speed *= 2.5f;
-        //todo: use observable
-        // GameController.Instance.WolfGetOutFromBody(transform.position, bloodSpatterManager.BloodSpattersBool);
+        GameData.Instance.SetValue(GameData.ON_WOLF_BODY_EXIT, this);
+        AudioManager.Instance.Howl();
         bloodSpatterManager.RemoveAll();
     }
 
@@ -150,13 +150,7 @@ public class Wolf : PlayerController
 
     public override void Die()
     {
-        transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
-        Destroy(GetComponent<Rigidbody2D>());
-        GetComponent<CapsuleCollider2D>().isTrigger = true;
-        Shadow.SetActive(false);
-        dead = true;
+        base.Die();
         ExitBody();
-        
-        Blood.SetActive(true);
     }
 }
