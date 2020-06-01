@@ -162,7 +162,7 @@ public class GameController : MonoBehaviour
             if (hit.collider.tag == "Sheep" && ProgressBar.HungryValue >= 100)
             {
                 if (hit.collider.GetComponent<Sheep>().dead) return false;
-                hit.collider.GetComponent<Sheep>().Kill();
+                hit.collider.GetComponent<Sheep>().Die();
                 FleeSheepsFrom(wolfMouth, 1f);
 
                 wolfScoreGoal--;
@@ -206,7 +206,7 @@ public class GameController : MonoBehaviour
             if (hit.collider.tag == "Sheep")
             {
                 if (hit.collider.GetComponent<Sheep>().dead) return;
-                hit.collider.GetComponent<Sheep>().Kill();
+                hit.collider.GetComponent<Sheep>().Die();
                 FleeSheepsFrom(dogMouth, 1f);
 
                 wolfScoreGoal--;

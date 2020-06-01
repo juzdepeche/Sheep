@@ -209,9 +209,11 @@ public class Sheep : MonoBehaviour
         }
     }
 
-    public void Kill(bool[] bloodSplatters = null)
+    public void Die(bool[] bloodSplatters = null)
     {
         transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+        // -0.3f so it is as high as it was before the 180 of localScale.y
+        transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f);
         Destroy(GetComponent<Rigidbody2D>());
         GetComponent<CapsuleCollider2D>().isTrigger = true;
         Shadow.SetActive(false);

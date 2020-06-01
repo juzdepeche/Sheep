@@ -67,7 +67,7 @@ public class Spawner : MonoBehaviour
     public void SpawnDeadSheep(Vector2 wolfPosition, bool[] blood)
     {
         GameObject newDeadSheep = Instantiate(Sheep, wolfPosition, Quaternion.identity);
-        newDeadSheep.GetComponent<Sheep>().Kill(blood);
+        newDeadSheep.GetComponent<Sheep>().Die(blood);
         newDeadSheep.GetComponent<BloodSpatterManager>().AddSplatterToBody(blood);
     }
 
