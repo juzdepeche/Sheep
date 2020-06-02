@@ -87,16 +87,17 @@ public class Wolf : PlayerController
 
     public override void Kill()
     {
+        //todo: check isRunning usage
         if (isRunning || !hasBody) return;
-        bool hasKilled = GameController.Instance.KillFromWolf(Mouth.transform.position);
-        if (hasKilled)
-        {
-            //sprite.sprite = WolfSprite;
-            if (hasBody) bloodSpatterManager.Splatter(1);
-            Speed *= SpeedMultiplier;
-            isRunning = true;
-            StartCoroutine(StopRunning());
-        }
+        GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
+    }
+
+    public void OnKillConfirmed()
+    {
+        if (hasBody) bloodSpatterManager.Splatter(1);
+        Speed *= SpeedMultiplier;
+        isRunning = true;
+        StartCoroutine(StopRunning());
     }
 
     public void ExitBody()

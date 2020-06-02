@@ -39,16 +39,11 @@ public class Dog : PlayerController
     {
         if (Action1WasPressed())
         {
-            Kill();
+            GameData.Instance.SetValue(GameData.ON_ACTION_1, this);
         }
         if (Action3WasPressed())
         {
             GameData.Instance.SetValue(GameData.ON_ACTION_3, this);
         }
-    }
-
-    public override void Kill()
-    {
-        GameController.Instance.KillSheepFromDog(Mouth.transform.position);
     }
 }

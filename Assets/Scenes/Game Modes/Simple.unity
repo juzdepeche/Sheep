@@ -852,7 +852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayersNumber: 70
   wolfScoreGoal: 8
-  wolfGoal: {fileID: 1777998017}
+  WolfGoal: {fileID: 1777998017}
   gameoverText: {fileID: 828078389}
   restartText: {fileID: 975572980}
   NightImage: {fileID: 1761937152}

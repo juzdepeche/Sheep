@@ -123,5 +123,8 @@ public abstract class PlayerController : MonoBehaviour
         Blood.transform.localScale = Vector3.Lerp(Blood.transform.localScale, new Vector3(3f, 3f, 3f), Time.deltaTime);
     }
 
-    public abstract void Kill();
+    public virtual void Kill()
+    {
+        
+    }
 }

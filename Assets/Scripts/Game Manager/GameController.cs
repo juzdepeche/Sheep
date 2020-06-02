@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     
     public int LayersNumber;
     public int wolfScoreGoal;
-    public Text wolfGoal;
+    public Text WolfGoal;
     public Text gameoverText;
     public Text restartText;
 
@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
         Wolves = new List<GameObject>();
         Dogs = new List<GameObject>();
         
-        wolfGoal.text = wolfScoreGoal.ToString();
+        WolfGoal.text = wolfScoreGoal.ToString();
 
         if (PlayerDevicesData.Players != null)
         {
@@ -154,83 +154,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-    }
-
-    public bool KillFromWolf(Vector2 wolfMouth)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(wolfMouth, Vector2.zero);
-        if (hit.collider != null)
-        {
-            if (hit.collider.tag == "Sheep" && ProgressBar.HungryValue >= 100)
-            {
-                if (hit.collider.GetComponent<Sheep>().dead) return false;
-                hit.collider.GetComponent<Sheep>().Die();
-                FleeSheepsFrom(wolfMouth, 1f);
-
-                wolfScoreGoal--;
-                wolfGoal.text = wolfScoreGoal.ToString();
-
-                if (wolfScoreGoal <= 0)
-                {
-                    GameOver("Wolf won.");
-                }
-
-                ProgressBar.HungryValue = 0;
-                AudioManager.Instance.Kill();
-                return true;
-            }
-            else if(hit.collider.tag == "Dog" && ProgressBar.HungryValue >= 100 && wolfScoreGoal == 0)
-            {
-                if (hit.collider.GetComponent<Dog>().dead) return false;
-                hit.collider.GetComponent<Dog>().Die();
-                FleeSheepsFrom(wolfMouth, 1.5f);
-                DogsNumber--;
-
-                ProgressBar.HungryValue = 0;
-
-                if (DogsNumber <= 0)
-                {
-                    GameOver("Wolf won.");
-                }
-                AudioManager.Instance.Kill();
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void KillSheepFromDog(Vector2 dogMouth)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(dogMouth, Vector2.zero);
-        if (hit.collider != null)
-        {
-            if (hit.collider.tag == "Sheep")
-            {
-                if (hit.collider.GetComponent<Sheep>().dead) return;
-                hit.collider.GetComponent<Sheep>().Die();
-                FleeSheepsFrom(dogMouth, 1f);
-
-                wolfScoreGoal--;
-                wolfGoal.text = wolfScoreGoal.ToString();
-                AudioManager.Instance.Kill();
-            }
-            else if(hit.collider.tag == "Wolf")
-            {
-                KillWolf(hit.collider.gameObject);
-                if (WolvesNumber == 0)
-                {
-                    GameOver("Doggo won.");
-                }
-            }
-        }
-    }
-
-    private void KillWolf(GameObject wolf)
-    {
-        wolf.GetComponent<Wolf>().Die();
-        WolvesNumber--;
-        AudioManager.Instance.Kill();
     }
 
     //to rework for the death of a  wolf
@@ -375,9 +298,90 @@ public class GameController : MonoBehaviour
         NightImage.color = tempColor;
     }
 
-    private void OnAction1(PlayerController value, string key)
+    private void OnAction1(PlayerController player, string key)
     {
-        Debug.Log(value);
+        switch(player.PlayerInput.Role)
+        {
+            case PlayerType.Dog:
+                DoDogKill(player.Mouth.transform.position);
+                break;
+            case PlayerType.Wolf:
+                bool hasKilled = DoWolfKill(player.Mouth.transform.position);
+                if (hasKilled)
+                {
+                    var wolf = (Wolf)player;
+                    wolf.OnKillConfirmed();
+                }    
+                break;
+        }
+    }
+
+    public void DoDogKill(Vector2 dogMouth)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(dogMouth, Vector2.zero);
+        if (hit.collider != null)
+        {
+            if (hit.collider.tag == "Sheep")
+            {
+                if (hit.collider.GetComponent<Sheep>().dead) return;
+                KillSheep(hit);
+            }
+            else if(hit.collider.tag == "Wolf")
+            {
+                KillWolf(hit.collider.gameObject);
+            }
+        }
+    }
+
+    public bool DoWolfKill(Vector2 wolfMouth)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(wolfMouth, Vector2.zero);
+        if (hit.collider != null)
+        {
+            if (hit.collider.tag == "Sheep" && ProgressBar.HungryValue >= 100)
+            {
+                if (hit.collider.GetComponent<Sheep>().dead) return false;
+
+                KillSheep(hit);
+                ProgressBar.HungryValue = 0;
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void KillSheep(RaycastHit2D raycastHit)
+    {
+        raycastHit.collider.GetComponent<Sheep>().Die();
+        FleeSheepsFrom(raycastHit.collider.transform.position, 1f);
+
+        wolfScoreGoal--;
+        UpdateWolfGoalText(wolfScoreGoal);
+
+        if (wolfScoreGoal <= 0)
+        {
+            GameOver("Wolf won.");
+        }
+
+        AudioManager.Instance.Kill();
+    }
+
+    private void KillWolf(GameObject wolf)
+    {
+        wolf.GetComponent<Wolf>().Die();
+        AudioManager.Instance.Kill();
+
+        WolvesNumber--;
+        if (WolvesNumber == 0)
+        {
+            GameOver("Doggo won.");
+        }
+    }
+
+    private void UpdateWolfGoalText(int newScrore)
+    {
+        WolfGoal.text = newScrore.ToString();
     }
 
     private void OnAction3(PlayerController player, string key)
