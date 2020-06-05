@@ -152,7 +152,8 @@ public class GameController : MonoBehaviour
             {
                 if (murderReactRange > Vector2.Distance(murderPosition, sheep.transform.position))
                 {
-                    sheep.GetComponent<Sheep>().FleeFrom(murderPosition, UnityEngine.Random.Range(time, time + 1f), bleed);
+                    sheep.GetComponent<Sheep>().FleeFrom(murderPosition, UnityEngine.Random.Range(time, time + 1f));
+                    sheep.GetComponent<IMortal>().Bleed(1);
                 }
             }
         }
@@ -217,7 +218,7 @@ public class GameController : MonoBehaviour
     {
         if (SpecialAttackTurn == PlayerType.Dog && ProgressBar.SpecialValue >= 100)
         {
-            FleeSheepsFromDog(doggoMouth, 2f, false);
+            FleeSheepsFromDog(doggoMouth, 2f);
             SpecialAttackTurn = PlayerType.Wolf;
             ProgressBar.SpecialValue = 0;
             FaceImage.sprite = WolfFace;
@@ -225,7 +226,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void FleeSheepsFromDog(Vector2 doggoMouth, float time, bool bleed)
+    private void FleeSheepsFromDog(Vector2 doggoMouth, float time)
     {
         foreach (GameObject sheep in Sheeps)
         {
@@ -233,7 +234,7 @@ public class GameController : MonoBehaviour
             {
                 if (murderReactRange > Vector2.Distance(doggoMouth, sheep.transform.position))
                 {
-                    sheep.GetComponent<Sheep>().FleeFrom(doggoMouth, UnityEngine.Random.Range(time, time + 1f), bleed);
+                    sheep.GetComponent<Sheep>().FleeFrom(doggoMouth, UnityEngine.Random.Range(time, time + 1f));
                 }
             }
         }

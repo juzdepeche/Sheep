@@ -35,7 +35,7 @@ public class DamageZone : MonoBehaviour
 
         SetCircleSize(new Vector3(0, 0), new Vector3(20, 20));
 
-        SetTargetCircle(new Vector3(0, 0), new Vector3(18, 18), 3f);
+        SetTargetCircle(new Vector3(0, 0), new Vector3(15, 15), 3f);
     }
 
     private void Update() {

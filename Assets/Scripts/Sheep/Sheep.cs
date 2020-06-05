@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Sheep : MonoBehaviour
+public class Sheep : MonoBehaviour, IMortal
 {
     public bool isFlocking = false;
     public float timeForNewPath = 1f;
@@ -45,6 +45,8 @@ public class Sheep : MonoBehaviour
 
     private float xBaseTransform;
 
+    private int health = 5; 
+
     private void Awake()
     {
         spritesRenderer = new SpriteRenderer[sprites.Length];
@@ -70,6 +72,12 @@ public class Sheep : MonoBehaviour
 
         lastFacingPosition = Vector2.zero;
         xBaseTransform = Math.Abs(transform.localScale.x);
+
+        FunctionPeriodic.Create(() => {
+            if (DamageZone.IsOutsideCircle_Static(transform.position)) {
+                Damage();
+            }
+        }, .5f);
 
         animator = GetComponent<Animator>();
     }
@@ -153,9 +161,8 @@ public class Sheep : MonoBehaviour
         isIdle = false;
     }
 
-    public void FleeFrom(Vector2 murderPosition, float fleeingTime, bool bleed)
+    public void FleeFrom(Vector2 murderPosition, float fleeingTime)
     {
-        if (bloodSplatterManager != null && bleed) bloodSplatterManager.Splatter(1);
         isFleeing = true;
 
         if (isIdle)
@@ -209,8 +216,9 @@ public class Sheep : MonoBehaviour
         }
     }
 
-    public void Die(bool[] bloodSplatters = null)
+    public void Die()
     {
+        if (dead) return;
         transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
         // -0.3f so it is as high as it was before the 180 of localScale.y
         transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f);
@@ -220,10 +228,18 @@ public class Sheep : MonoBehaviour
         dead = true;
 
         Blood.SetActive(true);
+    }
 
-        if (bloodSplatters != null) bloodSplatterManager.AddSplatterToBody(bloodSplatters);
+    public void Damage(int amount = 1)
+    {
+        Bleed(1);
+        health--;
+        if (health <= 0) Die();
+    }
 
-        if (animator != null) animator.SetBool("Dead", true);
+    public void Bleed(int amount = 1)
+    {
+        bloodSplatterManager.Splatter(amount);
     }
 
     public void HitFence()
