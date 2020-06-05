@@ -116,6 +116,8 @@ public class GameController : MonoBehaviour
 
             alphaNightImageCurrentTime += Time.deltaTime;
 
+            Debug.Log(tempColor.a);
+            
             if (alphaNightImageCurrentTime > toNightTime)
             {
                 alphaNightImageCurrentTime = 0;
