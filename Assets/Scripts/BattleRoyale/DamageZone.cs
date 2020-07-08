@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageZone : MonoBehaviour
 {
-    private static DamageZone instance;
+    public static DamageZone instance;
 
     [SerializeField] private Transform targetCircleTransform;
 
@@ -101,11 +101,7 @@ public class DamageZone : MonoBehaviour
         targetCircleSize = size;
     }
 
-    private bool IsOutsideCircle(Vector3 position) {
+    public bool IsOutsideCircle(Vector3 position) {
         return Vector3.Distance(position, circlePosition) > circleSize.x * .5f;
-    }
-
-    public static bool IsOutsideCircle_Static(Vector3 position) {
-        return instance.IsOutsideCircle(position);
     }
 }

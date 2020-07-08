@@ -73,11 +73,14 @@ public class Sheep : MonoBehaviour, IMortal
         lastFacingPosition = Vector2.zero;
         xBaseTransform = Math.Abs(transform.localScale.x);
 
-        FunctionPeriodic.Create(() => {
-            if (DamageZone.IsOutsideCircle_Static(transform.position)) {
-                Damage();
-            }
-        }, .5f);
+        if (DamageZone.instance != null)
+        {
+            FunctionPeriodic.Create(() => {
+                if (DamageZone.instance.IsOutsideCircle(transform.position)) {
+                    Damage();
+                }
+            }, .5f);
+        }
 
         animator = GetComponent<Animator>();
     }
