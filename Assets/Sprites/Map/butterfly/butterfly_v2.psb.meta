@@ -61,6 +61,7 @@ ScriptedImporter:
     maxTextureSizeSet: 0
     compressionQualitySet: 0
     textureFormatSet: 0
+    applyGammaDecoding: 0
   spriteImportData:
   - name: 
     originalName: 
@@ -1446,6 +1447,10 @@ ScriptedImporter:
   importedTextureWidth: 256
   importedTextureHeight: 512
   documentSize: {x: 288, y: 268}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
   textureActualWidth: 256
   textureActualHeight: 512
   spritePackingTag: 
@@ -1499,6 +1504,8 @@ ScriptedImporter:
         height: 218
       spriteId: 17901b1f26abc8046b6003d03c253dd7
       bones: 00000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 164
         y: 17
@@ -1506,6 +1513,8 @@ ScriptedImporter:
         height: 219
       spriteId: cd3e0fd9e8bff254895ca7771a7bb450
       bones: 01000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 20
         y: 19
@@ -1513,14 +1522,12 @@ ScriptedImporter:
         height: 221
       spriteId: 90bbd634c37bade4c91ca37f4b27f02b
       bones: 02000000
+      parentGroup: 0
+      order: 0
     dimension: {x: 0, y: 0}
-  boneGOs:
-  - go: {fileID: 5398446600274483697, guid: a9526809826f4064bae4811f3327d05b, type: 3}
-    index: 0
-  - go: {fileID: 4349327738871600741, guid: a9526809826f4064bae4811f3327d05b, type: 3}
-    index: 1
-  - go: {fileID: -4004682509774048581, guid: a9526809826f4064bae4811f3327d05b, type: 3}
-    index: 2
+    characterGroups: []
   generateGOHierarchy: 0
   textureAssetName: butterfly_v2
   prefabAssetName: butterfly_v2_GO
+  spriteLibAssetName: butterfly_v2 Sprite Lib
+  secondarySpriteTextures: []

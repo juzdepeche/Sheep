@@ -61,6 +61,7 @@ ScriptedImporter:
     maxTextureSizeSet: 0
     compressionQualitySet: 0
     textureFormatSet: 0
+    applyGammaDecoding: 0
   spriteImportData:
   - name: 
     originalName: 
@@ -3094,6 +3095,10 @@ ScriptedImporter:
   importedTextureWidth: 512
   importedTextureHeight: 512
   documentSize: {x: 458, y: 367}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
   textureActualWidth: 512
   textureActualHeight: 512
   spritePackingTag: 
@@ -3208,6 +3213,8 @@ ScriptedImporter:
         height: 152
       spriteId: 60660a9792b34a84f95ec19797d04c66
       bones: 02000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 79
         y: 83
@@ -3215,6 +3222,8 @@ ScriptedImporter:
         height: 276
       spriteId: adc0eb6da5147cd438f7bbfc3c82e7cb
       bones: 0000000001000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 167
         y: 13
@@ -3222,6 +3231,8 @@ ScriptedImporter:
         height: 163
       spriteId: cb09109e9d38afb4e83ea4de2d05859b
       bones: 0400000003000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 293
         y: 13
@@ -3229,6 +3240,8 @@ ScriptedImporter:
         height: 166
       spriteId: 29716b891c77a2d41b0e8aee1779f920
       bones: 0800000007000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 124
         y: 30
@@ -3236,6 +3249,8 @@ ScriptedImporter:
         height: 136
       spriteId: a0fdb3d67b6e1b7458ff096f6a2f96a1
       bones: 0600000005000000
+      parentGroup: 0
+      order: 0
     - spritePosition:
         x: 290
         y: 29
@@ -3243,30 +3258,12 @@ ScriptedImporter:
         height: 114
       spriteId: b9c8d120226e04e408132a9f979b9165
       bones: 0a00000009000000
+      parentGroup: 0
+      order: 0
     dimension: {x: 0, y: 0}
-  boneGOs:
-  - go: {fileID: 6532433701686655257, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 0
-  - go: {fileID: 6302553761532621721, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 1
-  - go: {fileID: -4065935765587060519, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 2
-  - go: {fileID: 7292810426777002516, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 3
-  - go: {fileID: 2591618757317228914, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 4
-  - go: {fileID: 8971273681949723804, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 5
-  - go: {fileID: -8567130625629495209, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 6
-  - go: {fileID: -4127551315363721465, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 7
-  - go: {fileID: -6589569342158778347, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 8
-  - go: {fileID: -953823788676076300, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 9
-  - go: {fileID: -9168588545490626530, guid: d77b0bd7a55f0294f9f4be254252943c, type: 3}
-    index: 10
+    characterGroups: []
   generateGOHierarchy: 0
   textureAssetName: sheep2unity
   prefabAssetName: sheep2unity_GO
+  spriteLibAssetName: sheep2unity Sprite Lib
+  secondarySpriteTextures: []
